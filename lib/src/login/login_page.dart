@@ -1,33 +1,51 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:lospescaditosdmary/src/login/login_controller.dart';
 import 'package:lospescaditosdmary/src/utils/my_colors.dart';
 
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({ Key? key }) : super(key: key);
+  const LoginPage({ Key key }) : super(key: key);
 
   @override
   _LoginPageState createState() => _LoginPageState();
 }
 
 class _LoginPageState extends State<LoginPage> {
+
+  LoginController _con = new LoginController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+      _con.init(context);
+
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       body: Container(
                 /* color: MyColors.primaryColor, */
         /* width: double.infinity, */
         child :Stack (
           children: [
-            
-            Column (
-              children: [
-                _imageLogo(),
-                _textLogin(),
-                _textEmail(),
-                _textPassword(),
-                _buttonLogin(),
-                _textRow(),
-              ],
+            SingleChildScrollView(
+              child: Column (
+                children: [
+                  _imageLogo(),
+                  _textLogin(),
+                  _textEmail(),
+                  _textPassword(),
+                  _buttonLogin(),
+                  _textRow(),
+                ],
+              )
             )
           ] 
         )
@@ -74,9 +92,19 @@ Widget _textEmail(){
       
     ),
     child: TextField(
-            decoration: InputDecoration(hintText: 'Correo electronico',
-            /* border: InputBorder.none, */
-            contentPadding: EdgeInsets.all(0)
+      controller: _con.emailController,
+      keyboardType: TextInputType.emailAddress,
+            decoration: InputDecoration(
+              hintText: 'Correo electronico',
+              /* border: InputBorder.none, */ 
+              contentPadding: EdgeInsets.all(15),
+              hintStyle: TextStyle(
+                color: MyColors.primaryColor
+              ),
+              prefixIcon: Icon(
+                Icons.email,
+                color: MyColors.primaryColor,
+              )
             ),
     ),
   );
@@ -89,11 +117,21 @@ Widget _textPassword(){
       
     ),
     child: TextField(
+      controller: _con.passwordController,
+            obscureText: true,
             decoration: InputDecoration(hintText: 'Contraseña',
             /* border: InputBorder.none, */
-            contentPadding: EdgeInsets.all(0)
+            contentPadding: EdgeInsets.all(15),
+            hintStyle: TextStyle(
+                color: MyColors.primaryColor
+              ),
+            prefixIcon: Icon(
+                Icons.lock,
+                color: MyColors.primaryColor,
+              )
             ),
     ),
+    
   );
 }
 
@@ -102,7 +140,7 @@ Widget _buttonLogin(){
     width: double.infinity,
     margin: EdgeInsets.symmetric(horizontal: 50, vertical: 30),
     child: ElevatedButton(
-      onPressed: () {}, 
+      onPressed: _con.login, 
       child: Text('INGRESAR'),
       style: ElevatedButton.styleFrom(
         primary: MyColors.primaryColor,
@@ -129,9 +167,7 @@ Widget _textRow(){
                   width: 5,
                 ),
                 GestureDetector(
-                  onTap: () {
-                    Navigator.pushNamed(context, 'register');
-                  },
+                  onTap: _con.registerPage,
                   child: Text(
                         'REGISTRATE', 
                         style: TextStyle(
