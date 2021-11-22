@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:lospescaditosdmary/src/login/login_controller.dart';
+import 'package:lospescaditosdmary/src/pages/login/login_controller.dart';
 import 'package:lospescaditosdmary/src/utils/my_colors.dart';
 
 

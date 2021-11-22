@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lospescaditosdmary/src/login/login_page.dart';
-import 'package:lospescaditosdmary/src/register/register_page.dart';
+import 'package:lospescaditosdmary/src/pages/login/login_page.dart';
+import 'package:lospescaditosdmary/src/pages/register/register_page.dart';
 import 'package:lospescaditosdmary/src/utils/my_colors.dart';
 
 void main() {
