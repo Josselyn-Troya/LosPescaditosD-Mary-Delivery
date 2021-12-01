@@ -23,10 +23,14 @@ class LoginController {
 
     User user = User.fromJson(await _shraredPrefe.read('user') ?? {});
 
+    print('usario: ${user.toJson()}');
 
-    if(user?.sessionToken != null){
+    if(user !=null){
+      if(user.sessionToken != null){
       Navigator.pushNamedAndRemoveUntil(context, 'customer/products/list', (route) => false);
+      }
     }
+    
   }
 
 

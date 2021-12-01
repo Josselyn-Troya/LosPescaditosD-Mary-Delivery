@@ -36,4 +36,10 @@ class ShraredPrefe {
     return prefs.remove(key);
 
   }
+
+
+  void logout(BuildContext context) async{
+    await remove('user');
+    Navigator.pushNamedAndRemoveUntil(context, 'login', (route) => false);
+  }
 }

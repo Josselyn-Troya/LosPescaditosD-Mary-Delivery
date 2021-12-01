@@ -65,4 +65,9 @@ class RegisterController {
     print(password);
     print(confirmPassword);
   }
+
+
+  void back(){
+    Navigator.pop(context);
+  }
 }

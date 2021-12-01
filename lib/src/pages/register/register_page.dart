@@ -76,7 +76,7 @@ Widget _iconBack(){
   return Row(
     children: [
       IconButton(
-        onPressed: () {}, 
+        onPressed: _con.back, 
       icon: Icon(
         Icons.arrow_back_ios,
         color: MyColors.primaryColor,
