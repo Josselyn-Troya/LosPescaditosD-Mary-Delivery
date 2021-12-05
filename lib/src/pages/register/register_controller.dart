@@ -56,6 +56,12 @@ class RegisterController {
 
     MyValidations.show(context, responseApi.message);
 
+    if(responseApi.success){
+      Future.delayed(Duration(seconds: 2),(){
+        Navigator.pushReplacementNamed(context, 'login');
+      });
+    }
+
     print('respuesta: ${responseApi.toJson()}');
 
     print(email);

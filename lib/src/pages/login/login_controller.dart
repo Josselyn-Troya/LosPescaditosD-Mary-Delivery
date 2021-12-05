@@ -27,12 +27,16 @@ class LoginController {
 
     if(user !=null){
       if(user.sessionToken != null){
-      Navigator.pushNamedAndRemoveUntil(context, 'customer/products/list', (route) => false);
+       if (user.roles.length > 1) {
+         print('usuario en roles');
+        Navigator.pushNamedAndRemoveUntil(context, 'roles', (route) => false);
+      }else {
+        Navigator.pushNamedAndRemoveUntil(context, user.roles[0].route, (route) => false);
+      }
       }
     }
     
   }
-
 
   void registerPage(){
     Navigator.pushNamed(context, 'register');
@@ -51,9 +55,19 @@ class LoginController {
     if (responseApi.success){
       User user = User.fromJson(responseApi.data);
       _shraredPrefe.save('user', user.toJson());
+
+      print('usuario logedo: ${user.toJson()}');
+
+       if (user.roles.length > 1) {
+         print('usuario en roles');
+        Navigator.pushNamedAndRemoveUntil(context, 'roles', (route) => false);
+      }else {
+        Navigator.pushNamedAndRemoveUntil(context, user.roles[0].route, (route) => false);
+      }
+
       //nos lleva a la siguiente pantalla elminando el 
       //historial de las pantallas anteriores
-      Navigator.pushNamedAndRemoveUntil(context, 'customer/products/list', (route) => false);
+      /* Navigator.pushNamedAndRemoveUntil(context, 'customer/products/list', (route) => false); */
       
     }else{
       MyValidations .show(context, responseApi.message);
