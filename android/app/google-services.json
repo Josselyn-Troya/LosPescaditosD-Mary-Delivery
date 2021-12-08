@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "934510731221",
+    "project_id": "delivery-restaurant-ed05c",
+    "storage_bucket": "delivery-restaurant-ed05c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:934510731221:android:166f6c1c36ab9b05d0a75c",
+        "android_client_info": {
+          "package_name": "com.example.lospescaditosdmary"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "934510731221-f57if8kmggf1cjn4oi9stul0rfrebqc0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.lospescaditosdmary",
+            "certificate_hash": "0701afbbea92fa9d582e63c1880af8036516f109"
+          }
+        },
+        {
+          "client_id": "934510731221-3va7c1i7up95iv47t5mlk9eerredev8v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB2MAMyuNpvIbW1qn-6Ok8WUe7QSQgLH-k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "934510731221-3va7c1i7up95iv47t5mlk9eerredev8v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
