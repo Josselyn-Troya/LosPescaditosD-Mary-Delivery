@@ -1,12 +1,15 @@
+import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:lospescaditosdmary/src/models/user.dart';
 import 'package:lospescaditosdmary/src/utils/shared_prefe.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class CustomerProductsListController {
+class AdminOrdersListController {
   BuildContext context;
   ShraredPrefe _shraredPrefe = new ShraredPrefe();
 
-  Function refresh;
+ Function refresh;
  
   User user;
 

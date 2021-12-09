@@ -32,7 +32,7 @@ class _RolesPageState extends State<RolesPage> {
           title: Text('Seleciona un rol'),
         ),
       body: Container(
-        margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.14),
+        margin: EdgeInsets.only(top: MediaQuery.of(context).size.height * 0.1),
         child:  ListView(
           children: _con.user !=null ? _con.user.roles.map((Rol rol) {
             return _cardRol(rol);
