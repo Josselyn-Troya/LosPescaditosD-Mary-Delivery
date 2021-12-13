@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'package:lospescaditosdmary/src/pages/register/register_controller.dart';
+import 'package:lospescaditosdmary/src/pages/customer/update/customer_update_controller.dart';
 import 'package:lospescaditosdmary/src/utils/my_colors.dart';
 
-class RegisterPage extends StatefulWidget {
-  const RegisterPage({ Key key }) : super(key: key);
+class CustomerUpdatePage extends StatefulWidget {
+  const CustomerUpdatePage({ Key key }) : super(key: key);
 
   @override
-  _RegisterPageState createState() => _RegisterPageState();
+  _CustomerUpdatePageState createState() => _CustomerUpdatePageState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
+class _CustomerUpdatePageState extends State<CustomerUpdatePage> {
 
-  RegisterController _con = new RegisterController();
+  CustomerUpdateController _con = new CustomerUpdateController();
 
   @override
   void initState() {
@@ -27,89 +27,36 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Editar perfil'),
+      ),
       body: Container(
         width: double.infinity,
         child: Stack(
           children: [
             SingleChildScrollView(
               child: Column (
-                children: [               
-                  _iconBack(),
+                children: [  
+                  SizedBox(height: 50),
+                  
                   _imageUser(), 
-                  /* _textRegister(), */
-                  _textEmail(),
+                  
                   _textName(),
                   _textLastName(),
                   _textPhone(),
-                  _textPassword(),
-                  _textConfirmPassword(),
-                  _buttonRegister(),
+        
+                  
                   
                 ],
               )
             )
           ],
         ),
-      )
+      ),
+      bottomNavigationBar: _buttonRegister(),
     );
   }
 
-  Widget _textRegister(){
-  return Container(
-    margin: EdgeInsets.only(
-      top: 10,
-      bottom: 20
-    ),
-    child: Text(
-        'Registrarse',
-        style: TextStyle(
-          color: MyColors.primaryColor,
-          fontWeight: FontWeight.bold,
-          fontSize: 22,
-        ),
-      
-    )
-  );
-}
-
-Widget _iconBack(){
-  return Row(
-    children: [
-      IconButton(
-        onPressed: _con.back, 
-      icon: Icon(
-        Icons.arrow_back_ios,
-        color: MyColors.primaryColor,
-      )),
-    ],
-  );
-}
-
-
-Widget _textEmail(){
-  return Container(
-    margin: EdgeInsets.symmetric(horizontal: 50, vertical: 10),
-    decoration: BoxDecoration(
-      
-    ),
-    child: TextField(
-      controller: _con.emailController,
-      keyboardType: TextInputType.emailAddress,
-            decoration: InputDecoration(
-              hintText: 'Correo electronico',
-             /* border: InputBorder.none, */ 
-              contentPadding: EdgeInsets.all(15),
-              hintStyle: TextStyle(
-                color: MyColors.primaryColor
-              ),
-              prefixIcon: Icon(
-                Icons.email,
-                color: MyColors.primaryColor,
-              )
-            ),
-    ),
-  );
-}
 
 Widget _textName(){
   return Container(
@@ -184,63 +131,15 @@ Widget _textPhone(){
   );
 }
 
-Widget _textPassword(){
- return Container(
-    margin: EdgeInsets.symmetric(horizontal: 50, vertical: 10),
-    decoration: BoxDecoration(
-      
-    ),
-    child: TextField(
-      controller: _con.passwordController,
-      obscureText: true,
-            decoration: InputDecoration(
-              hintText: 'Contraseña',
-             /* border: InputBorder.none, */ 
-              contentPadding: EdgeInsets.all(15),
-              hintStyle: TextStyle(
-                color: MyColors.primaryColor
-              ),
-              prefixIcon: Icon(
-                Icons.lock,
-                color: MyColors.primaryColor,
-              )
-            ),
-    ),
-  );
-}
 
-Widget _textConfirmPassword(){
- return Container(
-    margin: EdgeInsets.symmetric(horizontal: 50, vertical: 10),
-    decoration: BoxDecoration(
-      
-    ),
-    child: TextField(
-      controller: _con.confirmPasswordController,
-      obscureText: true,
-            decoration: InputDecoration(
-              hintText: 'Confirmar contraseña',
-             /* border: InputBorder.none, */ 
-              contentPadding: EdgeInsets.all(15),
-              hintStyle: TextStyle(
-                color: MyColors.primaryColor
-              ),
-              prefixIcon: Icon(
-                Icons.lock_open,
-                color: MyColors.primaryColor,
-              )
-            ),
-    ),
-  );
-}
 
 Widget _buttonRegister(){
   return Container(
     width: double.infinity,
     margin: EdgeInsets.symmetric(horizontal: 50, vertical: 30),
     child: ElevatedButton(
-      onPressed: _con.isEnable ? _con.register : null, 
-      child: Text('REGISTRARSE'),
+      onPressed: _con.isEnable ? _con.update : null, 
+      child: Text('ACTUALIZAR PERFIL'),
       style: ElevatedButton.styleFrom(
         primary: MyColors.primaryColor,
         shape: RoundedRectangleBorder(
@@ -258,6 +157,7 @@ Widget _imageUser() {
     child:  CircleAvatar(
         backgroundImage: _con.imageFile != null 
         ? FileImage(_con.imageFile)
+        : _con.user?.image !=null ? NetworkImage(_con.user.image)
         : AssetImage('assets/img/user_icon.png'),
         radius: 40,
         backgroundColor: Colors.white,
@@ -269,5 +169,4 @@ void refresh(){
     
   });
 }
-
 }

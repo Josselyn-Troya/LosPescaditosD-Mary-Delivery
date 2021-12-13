@@ -2,22 +2,22 @@ import 'dart:io';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lospescaditosdmary/src/models/response_api.dart';
 import 'package:lospescaditosdmary/src/models/user.dart';
 import 'package:lospescaditosdmary/src/provider/users_provider.dart';
 import 'package:lospescaditosdmary/src/utils/my_validations.dart';
+import 'package:lospescaditosdmary/src/utils/shared_prefe.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
 
 
-class RegisterController {
+class CustomerUpdateController {
   BuildContext context;
-  TextEditingController emailController = new TextEditingController();
   TextEditingController nameController = new TextEditingController();
   TextEditingController lastnameController = new TextEditingController();
   TextEditingController phoneController = new TextEditingController();
-  TextEditingController passwordController = new TextEditingController();
-  TextEditingController confirmPasswordController = new TextEditingController();
+ 
 
   UsersProvider usersProvider = new UsersProvider();
 
@@ -28,39 +28,36 @@ class RegisterController {
   ProgressDialog _progressDialog;
 
   bool isEnable = true;
+  User user;
+  ShraredPrefe _shraredPrefe = new ShraredPrefe();
 
 
 
-  Future init(BuildContext context, Function refresh){
+  Future init(BuildContext context, Function refresh) async{
     this.context = context;
     this.refresh = refresh;
     usersProvider.init(context);
     _progressDialog = ProgressDialog(context: context);
+    user = User.fromJson(await _shraredPrefe.read('user'));
+
+    nameController.text = user.name;
+    lastnameController.text = user.lastname;
+    phoneController.text = user.phone;
+    refresh();
   }
 
-  void register () async {
-    String email = emailController.text.trim();
+  void update () async {
+    
     String name = nameController.text;
     String lastname = lastnameController.text;
     String phone = phoneController.text.trim();
-    String password = passwordController.text.trim();
-    String confirmPassword = confirmPasswordController.text.trim();
-
-    if(email.isEmpty || name.isEmpty || lastname.isEmpty || phone.isEmpty || password.isEmpty || confirmPassword.isEmpty){
+   
+    if (name.isEmpty || lastname.isEmpty || phone.isEmpty){
       MyValidations.show(context, 'Debes completar todos los campos');
       
       return;
     }
 
-    if(confirmPassword != password){
-      MyValidations.show(context, 'Las contraseñas no son iguales');
-      return;
-    }
-
-    if(password.length <6 ){
-      MyValidations.show(context, 'La contraseña debe tener al menos 6 caracteres');
-      return;
-    }
 
     /* if(imageFile == null){
       MyValidations.show(context, 'Seleccione una imagen');
@@ -70,28 +67,27 @@ class RegisterController {
     _progressDialog.show(max: 100, msg: 'Cargando');
     isEnable = false;
 
-    User user = new User(
-      email: email,
+    User myUser = new User(
+      id: user.id,
       name: name,
       lastname: lastname,
       phone: phone,
-      password: password
     );
 
-    Stream stream = await usersProvider.createWithImage(user, imageFile);
-    stream.listen((res) {
+    Stream stream = await usersProvider.update(myUser, imageFile);
+    stream.listen((res) async {
 
       _progressDialog.close();
 
-      // ResponseApi responseApi = await usersProvider.create(user);
       ResponseApi responseApi = ResponseApi.fromJson(json.decode(res));
-      print('RESPUESTA: ${responseApi.toJson()}');
-      MyValidations.show(context, responseApi.message);
+      Fluttertoast.showToast(msg: responseApi.message);
+
 
       if (responseApi.success) {
-        Future.delayed(Duration(seconds: 3), () {
-          Navigator.pushReplacementNamed(context, 'login');
-        });
+
+        user = await usersProvider.getById(myUser.id); //obteniendo el usuario de la bd
+        _shraredPrefe.save('user', user.toJson());
+        Navigator.pushNamedAndRemoveUntil(context, 'customer/products/list', (route) => false);
       }
       else {
         isEnable = true;
@@ -99,12 +95,10 @@ class RegisterController {
 
     });
 
-    print(email);
     print(name);
     print(lastname);
     print(phone);
-    print(password);
-    print(confirmPassword);
+    
   }
 
   Future selectImage(ImageSource imageSource) async {

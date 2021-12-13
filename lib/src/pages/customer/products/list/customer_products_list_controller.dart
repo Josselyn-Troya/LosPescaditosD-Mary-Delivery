@@ -21,6 +21,10 @@ class CustomerProductsListController {
     _shraredPrefe.logout(context);
   }
 
+  void goToUpdatePage(){
+    Navigator.pushNamed(context, 'customer/update');
+  }
+
   void goToRoles(){
     Navigator.pushNamedAndRemoveUntil(context, 'roles', (route) => false);
   }
