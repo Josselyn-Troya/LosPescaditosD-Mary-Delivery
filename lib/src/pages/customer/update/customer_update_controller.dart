@@ -36,9 +36,11 @@ class CustomerUpdateController {
   Future init(BuildContext context, Function refresh) async{
     this.context = context;
     this.refresh = refresh;
-    usersProvider.init(context);
+    
     _progressDialog = ProgressDialog(context: context);
     user = User.fromJson(await _shraredPrefe.read('user'));
+
+    usersProvider.init(context, token: user.sessionToken);
 
     nameController.text = user.name;
     lastnameController.text = user.lastname;
@@ -59,11 +61,6 @@ class CustomerUpdateController {
     }
 
 
-    /* if(imageFile == null){
-      MyValidations.show(context, 'Seleccione una imagen');
-      return;
-    } */
-
     _progressDialog.show(max: 100, msg: 'Cargando');
     isEnable = false;
 
@@ -72,6 +69,7 @@ class CustomerUpdateController {
       name: name,
       lastname: lastname,
       phone: phone,
+      image: user.image
     );
 
     Stream stream = await usersProvider.update(myUser, imageFile);
@@ -86,6 +84,7 @@ class CustomerUpdateController {
       if (responseApi.success) {
 
         user = await usersProvider.getById(myUser.id); //obteniendo el usuario de la bd
+        print('Usuario que se obtiene: ${user.toJson()}');
         _shraredPrefe.save('user', user.toJson());
         Navigator.pushNamedAndRemoveUntil(context, 'customer/products/list', (route) => false);
       }
