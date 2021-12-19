@@ -15,11 +15,11 @@ class UsersProvider {
   String _api = '/api/users';
 
   BuildContext context;
-  String token;
+  User sessionUser;
 
-  Future init(BuildContext context, {String token}){
+  Future init(BuildContext context, {User sessionUser}){
     this.context = context;
-    this.token = token;
+    this.sessionUser = sessionUser;
   
   }
 
@@ -29,14 +29,14 @@ class UsersProvider {
     Uri url = Uri.http(_url, '$_api/findById/$id');
      Map<String, String> headers = {
         'Content-type': 'application/json',
-        'Authorization' : token
+        'Authorization' : sessionUser.sessionToken
       };
 
       final res = await http.get(url, headers: headers);
 
       if(res.statusCode == 401){ // 401 no autorizado
       Fluttertoast.showToast(msg: 'Tu sesion expiro');
-        new ShraredPrefe().logout(context);
+        new ShraredPrefe().logout(context, sessionUser.id);
       }
 
       final data = json.decode(res.body);
@@ -80,7 +80,7 @@ class UsersProvider {
       Uri url = Uri.http(_url, '$_api/update');
       final request = http.MultipartRequest('PUT', url);
 
-      request.headers['Authorization'] = token; 
+      request.headers['Authorization'] = sessionUser.sessionToken; 
 
       if (image != null) {
         request.files.add(http.MultipartFile(
@@ -96,7 +96,7 @@ class UsersProvider {
 
       if(response.statusCode == 401){
         Fluttertoast.showToast(msg: 'Tu sesion expiro');
-        new ShraredPrefe().logout(context);
+        new ShraredPrefe().logout(context, sessionUser.id);
       }
 
       return response.stream.transform(utf8.decoder);
@@ -128,6 +128,27 @@ class UsersProvider {
     }   
   }
 
+
+Future<ResponseApi> logout(String idUser) async {
+    try {
+      Uri url = Uri.http(_url, '$_api/logout');
+      String bodyParams = json.encode({
+        'id' : idUser
+      });
+      Map<String, String> headers = {
+        'Content-type': 'application/json'
+      };
+
+      final res = await http.post(url, headers: headers, body: bodyParams);
+      final data = json.decode(res.body);
+      ResponseApi responseApi = ResponseApi.fromJson(data);
+      return responseApi;
+
+    } catch (e) {
+      print('Error: $e');
+      return null;
+    }   
+  }
 
   Future<ResponseApi> login(String email, String password) async{
     try {

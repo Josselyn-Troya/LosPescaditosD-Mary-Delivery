@@ -40,7 +40,7 @@ class CustomerUpdateController {
     _progressDialog = ProgressDialog(context: context);
     user = User.fromJson(await _shraredPrefe.read('user'));
 
-    usersProvider.init(context, token: user.sessionToken);
+    usersProvider.init(context, sessionUser: user);
 
     nameController.text = user.name;
     lastnameController.text = user.lastname;

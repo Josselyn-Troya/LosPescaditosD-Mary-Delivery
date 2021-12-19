@@ -92,6 +92,13 @@ class _AdminOrdersListPageState extends State<AdminOrdersListPage> {
             ),
           ],)
           ),
+
+          ListTile(
+            onTap: _con.goToCategoryCreate,
+            title: Text('Crear categoria'),
+            trailing: Icon(Icons.list_alt),
+          ),
+
           ListTile(
             title: Text('Editar perfil'),
             trailing: Icon(Icons.edit),

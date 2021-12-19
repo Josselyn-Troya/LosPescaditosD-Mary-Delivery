@@ -18,7 +18,7 @@ class CustomerProductsListController {
   }
 
   void logout(){
-    _shraredPrefe.logout(context);
+    _shraredPrefe.logout(context, user.id);
   }
 
   void goToUpdatePage(){

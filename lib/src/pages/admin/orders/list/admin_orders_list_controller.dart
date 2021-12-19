@@ -21,7 +21,11 @@ class AdminOrdersListController {
   }
 
   void logout(){
-    _shraredPrefe.logout(context);
+    _shraredPrefe.logout(context, user.id);
+  }
+
+  void goToCategoryCreate(){
+    Navigator.pushNamed(context, 'admin/categories/create');
   }
 
   void goToRoles(){

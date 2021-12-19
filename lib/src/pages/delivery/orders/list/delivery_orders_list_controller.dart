@@ -21,7 +21,7 @@ class DeliveryOrdersListController {
   }
 
   void logout(){
-    _shraredPrefe.logout(context);
+    _shraredPrefe.logout(context, user.id);
   }
   
   void goToRoles(){
