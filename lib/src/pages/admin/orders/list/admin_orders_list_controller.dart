@@ -28,6 +28,10 @@ class AdminOrdersListController {
     Navigator.pushNamed(context, 'admin/categories/create');
   }
 
+  void goToProductCreate(){
+    Navigator.pushNamed(context, 'admin/products/create');
+  }
+
   void goToRoles(){
     Navigator.pushNamedAndRemoveUntil(context, 'roles', (route) => false);
   }

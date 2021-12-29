@@ -23,6 +23,34 @@ class CategoriesProvider {
     
   }
 
+
+  Future<List<Category>> getAll() async {
+    try {
+      Uri url = Uri.http(_url, '$_api/getAll');
+      Map<String, String> headers = {
+        'Content-type': 'application/json',
+        'Authorization': sessionUser.sessionToken
+      };
+
+      final res = await http.get(url, headers: headers);
+
+      if(res.statusCode == 401){ // 401 no autorizado
+      Fluttertoast.showToast(msg: 'Tu sesión expiro');
+        new ShraredPrefe().logout(context, sessionUser.id);
+      }
+
+      final data = json.decode(res.body); //obteniendo las categorias
+
+      Category category = Category.fromJsonList(data);
+      return category.toList;
+
+
+    } catch (e) {
+      print('Error: $e');
+      return [];
+    }
+  }
+
   Future<ResponseApi> create(Category category) async {
     try {
       Uri url = Uri.http(_url, '$_api/create');

@@ -98,10 +98,10 @@ class _AdminOrdersListPageState extends State<AdminOrdersListPage> {
             title: Text('Crear categoria'),
             trailing: Icon(Icons.list_alt),
           ),
-
           ListTile(
-            title: Text('Editar perfil'),
-            trailing: Icon(Icons.edit),
+            onTap: _con.goToProductCreate,
+            title: Text('Crear producto'),
+            trailing: Icon(Icons.fastfood),
           ),
           
           _con.user != null ?

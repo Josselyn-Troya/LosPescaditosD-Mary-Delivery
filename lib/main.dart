@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lospescaditosdmary/src/pages/admin/categories/create/admin_categories_create_page.dart';
 import 'package:lospescaditosdmary/src/pages/admin/orders/list/admin_orders_list_page.dart';
+import 'package:lospescaditosdmary/src/pages/admin/products/create/admin_products_create_page.dart';
 import 'package:lospescaditosdmary/src/pages/customer/products/list/customer_products_list_page.dart';
 import 'package:lospescaditosdmary/src/pages/customer/update/customer_update_page.dart';
 import 'package:lospescaditosdmary/src/pages/delivery/orders/list/delivery_orders_list_page.dart';
@@ -35,6 +36,7 @@ class _MyAppState extends State<MyApp> {
         'customer/update' :(BuildContext context) => CustomerUpdatePage(),
         'admin/orders/list' :(BuildContext context) => AdminOrdersListPage(),
         'admin/categories/create' :(BuildContext context) => AdminCategoriesCreatePage(),
+        'admin/products/create' :(BuildContext context) => AdminProductsCreatePage(),
         'delivery/orders/list' :(BuildContext context) => DeliveryOrdersListPage(),
       },
       theme: ThemeData(
