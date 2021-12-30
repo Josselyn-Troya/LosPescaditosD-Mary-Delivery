@@ -41,7 +41,8 @@ class _MyAppState extends State<MyApp> {
       },
       theme: ThemeData(
         fontFamily: 'NimbusSans',
-        primaryColor: MyColors.primaryColor
+        primaryColor: MyColors.primaryColor,
+        appBarTheme: AppBarTheme(elevation: 0)
       ),
       
     );
