@@ -91,14 +91,13 @@ class _CustomerProductsDetailPageState extends State<CustomerProductsDetailPage>
       margin: EdgeInsets.symmetric(horizontal: 17),
       child: Row(children: [
         IconButton(
-          onPressed: _con.addItem, 
+          onPressed: _con.removeItem, 
           icon: Icon(
-            Icons.add_circle_outline_rounded,
+            Icons.remove_circle_outline_rounded,
             color: Colors.grey,
             size: 30,
-          )
-        ),
-          Text(
+          )),
+           Text(
             '${_con.counter}',
             style: TextStyle(
               fontSize: 17,
@@ -106,13 +105,15 @@ class _CustomerProductsDetailPageState extends State<CustomerProductsDetailPage>
               color: Colors.grey
           )
         ),
-         IconButton(
-          onPressed: _con.removeItem, 
+        IconButton(
+          onPressed: _con.addItem, 
           icon: Icon(
-            Icons.remove_circle_outline_rounded,
+            Icons.add_circle_outline_rounded,
             color: Colors.grey,
             size: 30,
-          )),
+          )
+        ),
+         
           Spacer(),
           Container(
             margin: EdgeInsets.only(right: 10),
@@ -134,7 +135,7 @@ class _CustomerProductsDetailPageState extends State<CustomerProductsDetailPage>
       child: Text(
         _con.product.description ?? '',
         style: TextStyle(
-          fontSize: 13,
+          fontSize: 16,
           color: Colors.grey
         ),
       )
@@ -148,7 +149,7 @@ class _CustomerProductsDetailPageState extends State<CustomerProductsDetailPage>
       child: Text(
         _con.product.name ?? '',
         style: TextStyle(
-          fontSize: 20,
+          fontSize: 30,
           fontWeight: FontWeight.bold
         ),
       )

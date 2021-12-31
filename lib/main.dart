@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lospescaditosdmary/src/pages/admin/categories/create/admin_categories_create_page.dart';
 import 'package:lospescaditosdmary/src/pages/admin/orders/list/admin_orders_list_page.dart';
 import 'package:lospescaditosdmary/src/pages/admin/products/create/admin_products_create_page.dart';
+import 'package:lospescaditosdmary/src/pages/customer/orders/create/customer_orders_create_page.dart';
 import 'package:lospescaditosdmary/src/pages/customer/products/list/customer_products_list_page.dart';
 import 'package:lospescaditosdmary/src/pages/customer/update/customer_update_page.dart';
 import 'package:lospescaditosdmary/src/pages/delivery/orders/list/delivery_orders_list_page.dart';
@@ -34,6 +35,8 @@ class _MyAppState extends State<MyApp> {
         'roles' :(BuildContext context) => RolesPage(),
         'customer/products/list' :(BuildContext context) => CustomerProductsListPage(),
         'customer/update' :(BuildContext context) => CustomerUpdatePage(),
+        'customer/orders/create' :(BuildContext context) => CustomerOrdersCreatePage(),
+
         'admin/orders/list' :(BuildContext context) => AdminOrdersListPage(),
         'admin/categories/create' :(BuildContext context) => AdminCategoriesCreatePage(),
         'admin/products/create' :(BuildContext context) => AdminProductsCreatePage(),

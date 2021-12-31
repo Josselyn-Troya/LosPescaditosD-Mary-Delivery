@@ -187,7 +187,7 @@ class _CustomerProductsListPageState extends State<CustomerProductsListPage> {
 
   Widget _shoppingCar() {
     return GestureDetector(
-      onTap: () {},
+      onTap: _con.goToOrderCreatePage,
       child: Stack(
         children: [
           Container(
