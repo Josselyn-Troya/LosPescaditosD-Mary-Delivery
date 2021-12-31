@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-//import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:lospescaditosdmary/src/models/product.dart';
 import 'package:lospescaditosdmary/src/pages/customer/products/detail/customer_products_detail_controller.dart';
 import 'package:lospescaditosdmary/src/utils/my_colors.dart';
@@ -34,7 +34,7 @@ class _CustomerProductsDetailPageState extends State<CustomerProductsDetailPage>
     return Container(
       height: MediaQuery.of(context).size.height * 0.9,
     child: Column(children: [
-      /* _imageSlideshow(), */
+      _imageSlideshow(), 
       _productName(),
       _productDescription(),
       Spacer(),
@@ -155,17 +155,12 @@ class _CustomerProductsDetailPageState extends State<CustomerProductsDetailPage>
     );
   }
 
- /*  Widget _imageSlideshow(){
-    return Stack(
-        children: [
-          ImageSlideshow(
-            width: double.infinity,
-            height: MediaQuery.of(context).size.height * 0.4,
-            initialPage: 0,
-            indicatorColor: MyColors.primaryColor,
-            indicatorBackgroundColor: Colors.grey,
-            children: [
-              FadeInImage(
+  Widget _imageSlideshow(){
+    return Container(
+      width: double.infinity,
+      height: MediaQuery.of(context).size.height * 0.4,
+      child: CarouselSlider(items: [
+        FadeInImage(
                   image: _con.product?.image1 != null
                       ? NetworkImage(_con.product.image1)
                       : AssetImage('assets/img/no-image.png'),
@@ -173,7 +168,7 @@ class _CustomerProductsDetailPageState extends State<CustomerProductsDetailPage>
                   fadeInDuration: Duration(milliseconds: 50),
                   placeholder: AssetImage('assets/img/no-image.png'),
                 ),
-              FadeInImage(
+                FadeInImage(
                   image: _con.product?.image2 != null
                       ? NetworkImage(_con.product.image2)
                       : AssetImage('assets/img/no-image.png'),
@@ -181,31 +176,21 @@ class _CustomerProductsDetailPageState extends State<CustomerProductsDetailPage>
                   fadeInDuration: Duration(milliseconds: 50),
                   placeholder: AssetImage('assets/img/no-image.png'),
                 ),
-            ],
+      ],options: CarouselOptions(
+        height: 400,
+        initialPage: 0,
+        autoPlay: true,
+        autoPlayCurve: Curves.easeInOut,
+        enlargeCenterPage: true,
+        autoPlayInterval: Duration(seconds: 3),
+        scrollDirection: Axis.horizontal
 
-            /// Called whenever the page in the center of the viewport changes.
-            onPageChanged: (value) {
-              print('Page changed: $value');
-            },
-
-            autoPlayInterval: 10000,
-
-            /* /// Loops back to first slide.
-            isLoop: true, */
-          ),
-          Positioned(
-            left: 10,
-            top: 5,
-            child: IconButton(
-              onPressed: () {},
-              icon: Icon(Icons.arrow_back_ios_new,
-              color: MyColors.primaryColor,
-            ),
-          ))
-        ]
-    ); */
+      ),
+      ),
+              
+    );
       
-  //}
+  }
 
   void refresh(){
     setState(() {
