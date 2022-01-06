@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:lospescaditosdmary/src/pages/admin/categories/create/admin_categories_create_page.dart';
 import 'package:lospescaditosdmary/src/pages/admin/orders/list/admin_orders_list_page.dart';
 import 'package:lospescaditosdmary/src/pages/admin/products/create/admin_products_create_page.dart';
+import 'package:lospescaditosdmary/src/pages/customer/address/create/customer_address_create_page.dart';
+import 'package:lospescaditosdmary/src/pages/customer/address/list/customer_address_list_page.dart';
+import 'package:lospescaditosdmary/src/pages/customer/address/map/customer_address_map_page.dart';
 import 'package:lospescaditosdmary/src/pages/customer/orders/create/customer_orders_create_page.dart';
 import 'package:lospescaditosdmary/src/pages/customer/products/list/customer_products_list_page.dart';
 import 'package:lospescaditosdmary/src/pages/customer/update/customer_update_page.dart';
@@ -36,6 +39,9 @@ class _MyAppState extends State<MyApp> {
         'customer/products/list' :(BuildContext context) => CustomerProductsListPage(),
         'customer/update' :(BuildContext context) => CustomerUpdatePage(),
         'customer/orders/create' :(BuildContext context) => CustomerOrdersCreatePage(),
+        'customer/address/list' :(BuildContext context) => CustomerAddressListPage(),
+        'customer/address/create' :(BuildContext context) => CustomerAddressCreatePage(),
+        'customer/address/map' :(BuildContext context) => CustomerAddressMapPage(),
 
         'admin/orders/list' :(BuildContext context) => AdminOrdersListPage(),
         'admin/categories/create' :(BuildContext context) => AdminCategoriesCreatePage(),

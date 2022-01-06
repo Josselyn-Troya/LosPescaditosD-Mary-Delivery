@@ -79,7 +79,7 @@ class _CustomerProductsListPageState extends State<CustomerProductsListPage> {
                           padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
                           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 2,
-                              childAspectRatio: 0.8
+                              childAspectRatio: 0.6
                           ),
                           itemCount: snapshot.data?.length ?? 0,
                           itemBuilder: (_, index) {

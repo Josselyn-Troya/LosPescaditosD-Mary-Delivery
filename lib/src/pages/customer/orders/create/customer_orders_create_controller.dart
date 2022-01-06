@@ -57,5 +57,8 @@ class CustomerOrdersCreateController {
     getTotal();
   }
 
+  void goToAddress() {
+    Navigator.pushNamed(context, 'customer/address/list');
+  }
 
 }

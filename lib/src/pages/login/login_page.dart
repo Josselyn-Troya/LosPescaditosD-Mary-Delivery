@@ -31,6 +31,7 @@ class _LoginPageState extends State<LoginPage> {
 
     return Scaffold(
       body: Container(
+        padding: EdgeInsets.symmetric(vertical: 70),
                 /* color: MyColors.primaryColor, */
         /* width: double.infinity, */
         child :Stack (

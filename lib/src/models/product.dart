@@ -38,6 +38,7 @@ class Product {
     quantity: json["quantity"],
   );
 
+  //transformar una lista de tipo json o dynamic a una lista de productos 
   Product.fromJsonList(List<dynamic> jsonList) {
     if (jsonList == null) return;
     jsonList.forEach((item) {

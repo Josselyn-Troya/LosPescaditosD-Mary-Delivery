@@ -28,6 +28,7 @@ class _RegisterPageState extends State<RegisterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
+        padding: EdgeInsets.symmetric(vertical: 70),
         width: double.infinity,
         child: Stack(
           children: [
