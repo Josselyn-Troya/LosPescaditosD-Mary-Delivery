@@ -72,14 +72,7 @@ class _CustomerProductsDetailPageState extends State<CustomerProductsDetailPage>
                 ),
               )
             ),
-          Align(
-            alignment: Alignment.centerLeft,
-            child: Container(
-              margin: EdgeInsets.only(left: 50, top: 6),
-              height: 30,
-              child: Image.asset('assets/img/carrito_compras.png')
-            ),
-          )
+
           ],
         ),
       ),

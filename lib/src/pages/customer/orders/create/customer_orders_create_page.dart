@@ -43,15 +43,17 @@ class _CustomerOrdersCreatePageState extends State<CustomerOrdersCreatePage> {
 
       bottomNavigationBar: Container(
         height: MediaQuery.of(context).size.height * 0.23,
-        child: Column(children: [
-          Divider(
-                  color: Colors.grey[400],
-                  endIndent: 30, //derecha
-                  indent: 30, //izquierda
-                ),
-          _textTotalPrice(),
-          _buttonNext()
-        ],),
+        child: SingleChildScrollView(
+          child: Column(children: [
+            Divider(
+                    color: Colors.grey[400],
+                    endIndent: 30, //derecha
+                    indent: 30, //izquierda
+                  ),
+            _textTotalPrice(),
+            _buttonNext()
+          ],),
+        ),
       ),
       
     );
@@ -118,19 +120,6 @@ class _CustomerOrdersCreatePageState extends State<CustomerOrdersCreatePage> {
                 ),
               ),
             ),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Container(
-                margin: EdgeInsets.only(left: 80, top: 9),
-                height: 30,
-                child: Icon(
-                  Icons.check_circle,
-                  color: Colors.green,
-                  size: 30,
-                ),
-              ),
-            )
-
           ],
         ),
       ),

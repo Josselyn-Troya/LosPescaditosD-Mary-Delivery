@@ -13,7 +13,7 @@ class CustomerProductsDetailController {
   int counter = 1;
   double productPrice;
 
-  ShraredPrefe _shraredPrefe = new ShraredPrefe();
+  SharedPrefe _sharedPrefe = new SharedPrefe();
 
   List<Product> selectedProducts = [];
 
@@ -23,9 +23,9 @@ class CustomerProductsDetailController {
     this.product = product;
     productPrice = product.price;
 
-    //_shraredPrefe.remove('order');
+    //_SharedPrefe.remove('order');
 
-    selectedProducts = Product.fromJsonList(await _shraredPrefe.read('order')).toList;
+    selectedProducts = Product.fromJsonList(await _sharedPrefe.read('order')).toList;
 
     selectedProducts.forEach((p) {
       print('Producto seleccionado: ${p.toJson()}');
@@ -44,7 +44,7 @@ class CustomerProductsDetailController {
     }else{
       selectedProducts[index].quantity=counter;
     }
-    _shraredPrefe.save('order', selectedProducts);
+    _sharedPrefe.save('order', selectedProducts);
     Fluttertoast.showToast(msg: 'Producto agregado');
   }
 

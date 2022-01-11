@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:lospescaditosdmary/src/models/user.dart';
 import 'package:lospescaditosdmary/src/utils/shared_prefe.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class RolesController {
 
   BuildContext context;
   Function refresh;
   User user;
-  ShraredPrefe shraredPrefe = new ShraredPrefe();
+  SharedPrefe _sharedPrefe = new SharedPrefe();
 
   
   Future init (BuildContext context, Function refresh) async{
@@ -16,7 +15,7 @@ class RolesController {
     this.refresh = refresh;
 
     //obtiene el usuario de inicio de session
-    user = User.fromJson( await shraredPrefe.read('user'));
+    user = User.fromJson( await _sharedPrefe.read('user'));
     refresh();
   }
 

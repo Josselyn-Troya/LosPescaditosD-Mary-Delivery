@@ -5,7 +5,7 @@ import 'package:lospescaditosdmary/src/provider/users_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
-class ShraredPrefe { 
+class SharedPrefe {
 
   //metodo para guardar información
   void save(String key, value) async {

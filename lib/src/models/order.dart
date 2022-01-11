@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:geocoder/model.dart';
 import 'package:lospescaditosdmary/src/models/address.dart';
 import 'package:lospescaditosdmary/src/models/product.dart';
 import 'package:lospescaditosdmary/src/models/user.dart';
@@ -24,6 +23,7 @@ class Order {
   List<Order> toList = [];
   User customer;
   User delivery;
+  Address address;
 
 
   Order({
@@ -38,6 +38,7 @@ class Order {
     this.products,
     this.customer,
     this.delivery,
+    this.address
   });
 
   factory Order.fromJson(Map<String, dynamic> json) => Order(
@@ -52,7 +53,10 @@ class Order {
     products: json["products"] != null ? List<Product>.from(json["products"].map((model) => model is Product ? model : Product.fromJson(model))) ?? [] : [],
     customer: json['customer'] is String ? userFromJson(json['customer']) : json['customer'] is User ? json['customer'] : User.fromJson(json['customer'] ?? {}),
     delivery: json['delivery'] is String ? userFromJson(json['delivery']) : json['delivery'] is User ? json['delivery'] : User.fromJson(json['delivery'] ?? {}),
+    address: json['address'] is String ? addressFromJson(json['address']) : json['address'] is Address ? json['address'] : Address.fromJson(json['address'] ?? {}),
+
   );
+
 
   Order.fromJsonList(List<dynamic> jsonList) {
     if (jsonList == null) return;
@@ -74,5 +78,6 @@ class Order {
     "products": products,
     "customer": customer,
     "delivery": delivery,
+    "address": address
   };
 }

@@ -17,7 +17,7 @@ class AdminCategoriesCreateController {
 
   CategoriesProvider _categoriesProvider = new CategoriesProvider();
   User user;
-  ShraredPrefe sharedPrefe = new ShraredPrefe();
+  SharedPrefe sharedPrefe = new SharedPrefe();
 
 
   Future init(BuildContext context, Function refresh) async {

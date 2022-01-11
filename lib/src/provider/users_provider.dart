@@ -23,7 +23,6 @@ class UsersProvider {
   
   }
 
-
   Future <User> getById(String id) async{
     try {
     Uri url = Uri.http(_url, '$_api/findById/$id');
@@ -36,7 +35,7 @@ class UsersProvider {
 
       if(res.statusCode == 401){ // 401 no autorizado
       Fluttertoast.showToast(msg: 'Tu sesion expiro');
-        new ShraredPrefe().logout(context, sessionUser.id);
+        new SharedPrefe().logout(context, sessionUser.id);
       }
 
       final data = json.decode(res.body);
@@ -48,6 +47,32 @@ class UsersProvider {
       return null;
     }
   }
+
+
+  Future<List<User>> getDelivery() async {
+    try {
+      Uri url = Uri.http(_url, '$_api/findDelivery');
+      Map<String, String> headers = {
+        'Content-type': 'application/json',
+        'Authorization': sessionUser.sessionToken
+      };
+      final res = await http.get(url, headers: headers);
+
+      if (res.statusCode == 401) { // NO AUTORIZADO
+        Fluttertoast.showToast(msg: 'Tu sesion expiro');
+        new SharedPrefe().logout(context, sessionUser.id);
+      }
+
+      final data = json.decode(res.body);
+      User user = User.fromJsonList(data);
+      return user.toList;
+    }
+    catch(e) {
+      print('Error: $e');
+      return null;
+    }
+  }
+
 
 
   Future<Stream> createWithImage(User user, File image) async{
@@ -96,7 +121,7 @@ class UsersProvider {
 
       if(response.statusCode == 401){
         Fluttertoast.showToast(msg: 'Tu sesion expiro');
-        new ShraredPrefe().logout(context, sessionUser.id);
+        new SharedPrefe().logout(context, sessionUser.id);
       }
 
       return response.stream.transform(utf8.decoder);

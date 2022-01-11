@@ -322,7 +322,8 @@ class _CustomerProductsListPageState extends State<CustomerProductsListPage> {
             trailing: Icon(Icons.edit),
           ),
           ListTile(
-            title: Text('Carrito de compras'),
+            onTap: _con.goToOrdersList,
+            title: Text('Mis compras'),
             trailing: Icon(Icons.shopping_cart),
           ),
           _con.user != null ?

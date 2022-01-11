@@ -33,7 +33,7 @@ class ProductsProvider {
 
       if (res.statusCode == 401) {
         Fluttertoast.showToast(msg: 'Sesión expirada');
-        new ShraredPrefe().logout(context, sessionUser.id);
+        new SharedPrefe().logout(context, sessionUser.id);
       }
       final data = json.decode(res.body); 
       Product product = Product.fromJsonList(data);

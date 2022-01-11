@@ -36,7 +36,7 @@ class AddressProvider {
 
       if (res.statusCode == 401) {
         Fluttertoast.showToast(msg: 'Sesion expirada');
-        new ShraredPrefe().logout(context, sessionUser.id);
+        new SharedPrefe().logout(context, sessionUser.id);
       }
       final data = json.decode(res.body); 
       Address address = Address.fromJsonList(data);
@@ -60,7 +60,7 @@ class AddressProvider {
 
       if (res.statusCode == 401) {
         Fluttertoast.showToast(msg: 'Sesion expirada');
-        new ShraredPrefe().logout(context, sessionUser.id);
+        new SharedPrefe().logout(context, sessionUser.id);
       }
 
       final data = json.decode(res.body);

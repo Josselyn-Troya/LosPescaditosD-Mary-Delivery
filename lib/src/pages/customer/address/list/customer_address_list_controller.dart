@@ -17,7 +17,7 @@ class  CustomerAddressListController {
 
   AddressProvider _addressProvider = new AddressProvider();
   User user;
-  ShraredPrefe _sharedPrefe = new ShraredPrefe();
+  SharedPrefe _sharedPrefe = new SharedPrefe();
 
   int radioValue = 0;
 

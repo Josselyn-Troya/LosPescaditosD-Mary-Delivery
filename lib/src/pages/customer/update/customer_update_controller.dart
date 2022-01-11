@@ -29,7 +29,7 @@ class CustomerUpdateController {
 
   bool isEnable = true;
   User user;
-  ShraredPrefe _shraredPrefe = new ShraredPrefe();
+  SharedPrefe _sharedPrefe = new SharedPrefe();
 
 
 
@@ -38,7 +38,7 @@ class CustomerUpdateController {
     this.refresh = refresh;
     
     _progressDialog = ProgressDialog(context: context);
-    user = User.fromJson(await _shraredPrefe.read('user'));
+    user = User.fromJson(await _sharedPrefe.read('user'));
 
     usersProvider.init(context, sessionUser: user);
 
@@ -85,7 +85,7 @@ class CustomerUpdateController {
 
         user = await usersProvider.getById(myUser.id); //obteniendo el usuario de la bd
         print('Usuario que se obtiene: ${user.toJson()}');
-        _shraredPrefe.save('user', user.toJson());
+        _sharedPrefe.save('user', user.toJson());
         Navigator.pushNamedAndRemoveUntil(context, 'customer/products/list', (route) => false);
       }
       else {

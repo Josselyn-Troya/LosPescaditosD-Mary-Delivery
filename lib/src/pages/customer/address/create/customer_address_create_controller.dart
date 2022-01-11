@@ -22,12 +22,12 @@ class  CustomerAddressCreateController {
 
   AddressProvider _addressProvider = new AddressProvider();
   User user;
-  ShraredPrefe _shraredPrefe = new ShraredPrefe();
+  SharedPrefe _sharedPrefe = new SharedPrefe();
 
   Future init(BuildContext context, Function refresh) async {
     this.context = context;
     this.refresh= refresh;
-    user = User.fromJson(await _shraredPrefe.read('user'));
+    user = User.fromJson(await _sharedPrefe.read('user'));
     _addressProvider.init(context, user);
   }
 
@@ -55,7 +55,7 @@ class  CustomerAddressCreateController {
     if (responseApi.success) {
 
       address.id = responseApi.data;
-      _shraredPrefe.save('address', address);
+      _sharedPrefe.save('address', address);
 
       Fluttertoast.showToast(msg: responseApi.message);
       Navigator.pop(context, true);

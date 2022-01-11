@@ -12,7 +12,7 @@ class CustomerOrdersCreateController {
   int counter = 1;
   double productPrice;
 
-  ShraredPrefe _sharedPrefe = new ShraredPrefe();
+  SharedPrefe _sharedPrefe = new SharedPrefe();
 
   List<Product> selectedProducts = [];
   double total = 0;

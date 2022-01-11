@@ -10,7 +10,7 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class CustomerProductsListController {
   BuildContext context;
-  ShraredPrefe _shraredPrefe = new ShraredPrefe();
+  SharedPrefe _sharedPrefe = new SharedPrefe();
   GlobalKey<ScaffoldState> key = new GlobalKey<ScaffoldState>();
 
   Function refresh;
@@ -23,7 +23,7 @@ class CustomerProductsListController {
   Future init(BuildContext context, Function refresh) async{
     this.context = context; 
     this.refresh = refresh;
-    user = User.fromJson(await _shraredPrefe.read('user'));
+    user = User.fromJson(await _sharedPrefe.read('user'));
     _categoriesProvider.init(context, user);
     _productsProvider.init(context, user);
     getCategories();
@@ -38,7 +38,7 @@ class CustomerProductsListController {
 
 
   void logout(){
-    _shraredPrefe.logout(context, user.id);
+    _sharedPrefe.logout(context, user.id);
   }
 
   void goToUpdatePage(){
@@ -67,5 +67,10 @@ class CustomerProductsListController {
         context: context,
         builder: (context) => CustomerProductsDetailPage(product: product)
     );
+  }
+
+
+  void goToOrdersList(){
+    Navigator.pushNamed(context, 'customer/orders/list');
   }
 }

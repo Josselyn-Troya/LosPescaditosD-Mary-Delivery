@@ -36,7 +36,7 @@ class CategoriesProvider {
 
       if(res.statusCode == 401){ // 401 no autorizado
       Fluttertoast.showToast(msg: 'Tu sesión expiro');
-        new ShraredPrefe().logout(context, sessionUser.id);
+        new SharedPrefe().logout(context, sessionUser.id);
       }
 
       final data = json.decode(res.body); //obteniendo las categorias
@@ -64,7 +64,7 @@ class CategoriesProvider {
 
       if(res.statusCode == 401){ // 401 no autorizado
       Fluttertoast.showToast(msg: 'Tu sesión expiro');
-        new ShraredPrefe().logout(context, sessionUser.id);
+        new SharedPrefe().logout(context, sessionUser.id);
       }
 
       final data = json.decode(res.body);

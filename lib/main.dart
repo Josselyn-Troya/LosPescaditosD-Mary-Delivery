@@ -6,9 +6,12 @@ import 'package:lospescaditosdmary/src/pages/customer/address/create/customer_ad
 import 'package:lospescaditosdmary/src/pages/customer/address/list/customer_address_list_page.dart';
 import 'package:lospescaditosdmary/src/pages/customer/address/map/customer_address_map_page.dart';
 import 'package:lospescaditosdmary/src/pages/customer/orders/create/customer_orders_create_page.dart';
+import 'package:lospescaditosdmary/src/pages/customer/orders/list/customer_orders_list_page.dart';
+import 'package:lospescaditosdmary/src/pages/customer/orders/map/customer_orders_map_page.dart';
 import 'package:lospescaditosdmary/src/pages/customer/products/list/customer_products_list_page.dart';
 import 'package:lospescaditosdmary/src/pages/customer/update/customer_update_page.dart';
 import 'package:lospescaditosdmary/src/pages/delivery/orders/list/delivery_orders_list_page.dart';
+import 'package:lospescaditosdmary/src/pages/delivery/orders/map/delivery_orders_map_page.dart';
 import 'package:lospescaditosdmary/src/pages/login/login_page.dart';
 import 'package:lospescaditosdmary/src/pages/register/register_page.dart';
 import 'package:lospescaditosdmary/src/pages/roles/roles_pages.dart';
@@ -36,17 +39,23 @@ class _MyAppState extends State<MyApp> {
         'login' :(BuildContext context) => LoginPage(),
         'register' :(BuildContext context) => RegisterPage(),
         'roles' :(BuildContext context) => RolesPage(),
+
         'customer/products/list' :(BuildContext context) => CustomerProductsListPage(),
         'customer/update' :(BuildContext context) => CustomerUpdatePage(),
         'customer/orders/create' :(BuildContext context) => CustomerOrdersCreatePage(),
         'customer/address/list' :(BuildContext context) => CustomerAddressListPage(),
         'customer/address/create' :(BuildContext context) => CustomerAddressCreatePage(),
         'customer/address/map' :(BuildContext context) => CustomerAddressMapPage(),
+        'customer/orders/list' :(BuildContext context) => CustomerOrdersListPage(),
+        'customer/orders/map' :(BuildContext context) => CustomerOrdersMapPage(),
 
         'admin/orders/list' :(BuildContext context) => AdminOrdersListPage(),
         'admin/categories/create' :(BuildContext context) => AdminCategoriesCreatePage(),
         'admin/products/create' :(BuildContext context) => AdminProductsCreatePage(),
+
         'delivery/orders/list' :(BuildContext context) => DeliveryOrdersListPage(),
+        'delivery/orders/map' :(BuildContext context) => DeliveryOrdersMapPage(),
+
       },
       theme: ThemeData(
         fontFamily: 'NimbusSans',

@@ -40,10 +40,12 @@ class _CustomerAddressListPageState extends State<CustomerAddressListPage> {
             top: 0,
             child: _textSelectAddress()
             ),
-           Container(
-             margin: EdgeInsets.only(top: 50),
-             child: _listAddress()
-             )             
+          SingleChildScrollView(
+             child: Container(
+               margin: EdgeInsets.only(top: 50),
+               child: _listAddress()
+               ),
+           )             
         ],
       ),
       

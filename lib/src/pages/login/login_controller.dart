@@ -14,14 +14,14 @@ class LoginController {
 
   UsersProvider usersProvider = new UsersProvider();
 
-  ShraredPrefe _shraredPrefe = new ShraredPrefe();
+  SharedPrefe _sharedPrefe = new SharedPrefe();
 
   //proceso que tarda tiempo 
   Future init(BuildContext context) async {
     this.context = context;
     await usersProvider.init(context);
 
-    User user = User.fromJson(await _shraredPrefe.read('user') ?? {});
+    User user = User.fromJson(await _sharedPrefe.read('user') ?? {});
 
     print('usario: ${user.toJson()}');
 
@@ -54,7 +54,7 @@ class LoginController {
 
     if (responseApi.success){
       User user = User.fromJson(responseApi.data);
-      _shraredPrefe.save('user', user.toJson());
+      _sharedPrefe.save('user', user.toJson());
 
       print('usuario logedo: ${user.toJson()}');
 
