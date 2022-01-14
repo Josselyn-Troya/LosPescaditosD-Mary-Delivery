@@ -91,14 +91,14 @@ class CustomerAddressMapController {
     try {
        await _determinePosition(); // obtiene la posicion actual y solicita los permisos
       _position = await Geolocator.getLastKnownPosition(); // LAT Y LNG
-      animateCameraToPosition(_position.latitude, _position.longitude);
+      animateCameraPosition(_position.latitude, _position.longitude);
 
     } catch (e) {
       print('Erorr: $e');
     }
   }
 
-  Future animateCameraToPosition(double lat, double lng) async {
+  Future animateCameraPosition(double lat, double lng) async {
     GoogleMapController controller = await _mapController.future;
     if (controller != null) {
       controller.animateCamera(CameraUpdate.newCameraPosition(

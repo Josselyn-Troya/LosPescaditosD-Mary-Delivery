@@ -27,7 +27,7 @@ class AdminProductsCreateController {
   CategoriesProvider _categoriesProvider = new CategoriesProvider();
   ProductsProvider _productsProvider = new ProductsProvider();
   User user;
-  ShraredPrefe sharedPrefe = new ShraredPrefe();
+  SharedPrefe sharedPrefe = new SharedPrefe();
 
   List<Category> categories = [];
   String idCategory; //almacena el id de la categoria seleccionada

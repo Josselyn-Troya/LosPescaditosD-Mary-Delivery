@@ -16,7 +16,7 @@ import 'package:lospescaditosdmary/src/utils/my_validations.dart';
 import 'package:lospescaditosdmary/src/utils/shared_prefe.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class DeliveryOrdersMapController {
+class CustomerOrdersMapController {
 
   BuildContext context;
   Function refresh;

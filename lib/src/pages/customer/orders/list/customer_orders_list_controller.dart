@@ -3,12 +3,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lospescaditosdmary/src/models/order.dart';
 import 'package:lospescaditosdmary/src/models/user.dart';
-import 'package:lospescaditosdmary/src/pages/delivery/orders/detail/delivery_orders_detail_page.dart';
+import 'package:lospescaditosdmary/src/pages/customer/orders/detail/customer_orders_detail_page.dart';
 import 'package:lospescaditosdmary/src/provider/orders_provider.dart';
 import 'package:lospescaditosdmary/src/utils/shared_prefe.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
-class DeliveryOrdersListController {
+class CustomerOrdersListController {
 
   BuildContext context;
   SharedPrefe _sharedPrefe = new SharedPrefe();
@@ -16,7 +16,7 @@ class DeliveryOrdersListController {
   Function refresh;
   User user;
 
-  List<String> status = ['DESPACHADO', 'EN CAMINO', 'ENTREGADO'];
+  List<String> status = ['PEDIDO', 'DESPACHADO', 'EN CAMINO', 'ENTREGADO'];
   OrdersProvider _ordersProvider = new OrdersProvider();
 
   bool isUpdated;
@@ -31,11 +31,11 @@ class DeliveryOrdersListController {
   }
 
   Future<List<Order>> getOrders(String status) async {
-    return await _ordersProvider.getDeliveryStatus(user.id, status);
+    return await _ordersProvider.getCustomerStatus(user.id, status);
   }
   
   void openModalBottomSheet(Order order) async{
-    isUpdated = await showMaterialModalBottomSheet(context: context, builder: (context) => DeliveryOrdersDetailPage(order: order));
+    isUpdated = await showMaterialModalBottomSheet(context: context, builder: (context) => CustomerOrdersDetailPage(order: order));
 
     if(isUpdated){
       refresh();

@@ -8,7 +8,7 @@ import 'package:lospescaditosdmary/src/provider/orders_provider.dart';
 import 'package:lospescaditosdmary/src/provider/users_provider.dart';
 import 'package:lospescaditosdmary/src/utils/shared_prefe.dart';
 
-class DeliveryOrdersDetailController {
+class CustomerOrdersDetailController {
 
   BuildContext context;
   Function refresh;
@@ -42,17 +42,7 @@ class DeliveryOrdersDetailController {
   }
 
   void updateOrder() async {
-      if(order.status == 'DESPACHADO'){
-        ResponseApi responseApi = await _ordersProvider.updateTheWay(order);
-        Fluttertoast.showToast(msg: responseApi.message, toastLength: Toast.LENGTH_LONG);
-        Navigator.pop(context, true);
-        if (responseApi.success) {
-          Navigator.pushNamed(context, 'delivery/orders/map', arguments: order.toJson());
-        }
-      }else{
-        Navigator.pushNamed(context, 'delivery/orders/map', arguments: order.toJson());
-      }
-
+    Navigator.pushNamed(context, 'customer/orders/map', arguments: order.toJson());
   }
 
   void getUsers() async {
