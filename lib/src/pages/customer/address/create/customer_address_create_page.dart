@@ -19,7 +19,7 @@ class _CustomerAddressCreatePageState extends State<CustomerAddressCreatePage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    SchedulerBinding.instance.addPersistentFrameCallback((timeStamp) {
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
       _con.init(context, refresh);
     });
   }
@@ -31,15 +31,15 @@ class _CustomerAddressCreatePageState extends State<CustomerAddressCreatePage> {
         title: Text('Nueva dirección'),
       ),
       bottomNavigationBar: _buttonAccept(),
-      body: Column(
-        children: [
-          _textCompleteData(),
-          _textFieldRefPoint(),
-          _textFieldNeighborhood(),
-          _textFieldAddress(),
-          
-          
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            _textCompleteData(),
+            _textFieldRefPoint(),
+            _textFieldNeighborhood(),
+            _textFieldAddress(),
+          ],
+        ),
       ),
     );
   }

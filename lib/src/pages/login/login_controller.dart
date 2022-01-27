@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:lospescaditosdmary/src/models/response_api.dart';
 import 'package:lospescaditosdmary/src/models/user.dart';
+import 'package:lospescaditosdmary/src/provider/notification_provider.dart';
 import 'package:lospescaditosdmary/src/provider/users_provider.dart';
 import 'package:lospescaditosdmary/src/utils/my_validations.dart';
 import 'package:lospescaditosdmary/src/utils/shared_prefe.dart';
@@ -14,6 +15,8 @@ class LoginController {
 
   UsersProvider usersProvider = new UsersProvider();
 
+  NotificationProvider notificationProvider = new NotificationProvider();
+
   SharedPrefe _sharedPrefe = new SharedPrefe();
 
   //proceso que tarda tiempo 
@@ -26,7 +29,10 @@ class LoginController {
     print('usario: ${user.toJson()}');
 
     if(user !=null){
-      if(user.sessionToken != null){
+      if(user?.sessionToken != null){
+
+        notificationProvider.saveToken(user, context);
+
        if (user.roles.length > 1) {
          print('usuario en roles');
         Navigator.pushNamedAndRemoveUntil(context, 'roles', (route) => false);
@@ -55,6 +61,8 @@ class LoginController {
     if (responseApi.success){
       User user = User.fromJson(responseApi.data);
       _sharedPrefe.save('user', user.toJson());
+      
+      notificationProvider.saveToken(user, context);
 
       print('usuario logedo: ${user.toJson()}');
 

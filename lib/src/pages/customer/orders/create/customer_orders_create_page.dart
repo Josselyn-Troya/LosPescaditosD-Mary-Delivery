@@ -41,6 +41,7 @@ class _CustomerOrdersCreatePageState extends State<CustomerOrdersCreatePage> {
       )
       : NoDataWidget(text: 'Ningun producto ha sido agregado',),
 
+
       bottomNavigationBar: Container(
         height: MediaQuery.of(context).size.height * 0.23,
         child: SingleChildScrollView(
@@ -51,6 +52,7 @@ class _CustomerOrdersCreatePageState extends State<CustomerOrdersCreatePage> {
                     indent: 30, //izquierda
                   ),
             _textTotalPrice(),
+
             _buttonNext()
           ],),
         ),

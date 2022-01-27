@@ -6,6 +6,7 @@ import 'package:lospescaditosdmary/src/models/response_api.dart';
 import 'package:lospescaditosdmary/src/models/user.dart';
 import 'package:lospescaditosdmary/src/provider/address_provider.dart';
 import 'package:lospescaditosdmary/src/provider/orders_provider.dart';
+import 'package:lospescaditosdmary/src/utils/my_validations.dart';
 import 'package:lospescaditosdmary/src/utils/shared_prefe.dart';
 
 class  CustomerAddressListController {
@@ -45,9 +46,15 @@ class  CustomerAddressListController {
       products: selectedProducts
      );
     ResponseApi responseApi = await _ordersProvider.create(order);
+    if(address.isEmpty){
+      MyValidations.show(context, 'No se selecciono ninguna dirección');
+    }else{
+      Navigator.pushNamedAndRemoveUntil(context, 'customer/products/list', (route) => false);
+      MyValidations.show(context, 'Orden creada correctamente, revisar en "Mis compras');
+    }
+
     print('Respuesta de las ordenes: ${responseApi.message}');
   }
-
 
   void handleRadioValueChange(int value) async {
     radioValue = value;

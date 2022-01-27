@@ -64,10 +64,10 @@ class AdminProductsCreateController {
       MyValidations.show(context, 'Debe llenar todos los campos');
       return;
     }
-    /* if(imageFile1 == null || imageFile2 == null ){
-      MyValidations.show(context, 'Debe ingresar una imagen');
+     if(imageFile1 == null || imageFile2 == null ){
+      MyValidations.show(context, 'Debe ingresar las dos imagenes');
       return;
-    } */
+    }
     if(idCategory == null){
       MyValidations.show(context, 'Debe seleccionar la categoria del producto');
       return;

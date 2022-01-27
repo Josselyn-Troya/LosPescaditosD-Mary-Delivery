@@ -3,6 +3,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:lospescaditosdmary/src/models/order.dart';
 import 'package:lospescaditosdmary/src/pages/admin/orders/list/admin_orders_list_controller.dart';
 import 'package:lospescaditosdmary/src/utils/my_colors.dart';
+import 'package:lospescaditosdmary/src/utils/relative_time.dart';
 import 'package:lospescaditosdmary/src/widgets/no_data_widget.dart';
 
 class AdminOrdersListPage extends StatefulWidget {
@@ -140,7 +141,7 @@ class _AdminOrdersListPageState extends State<AdminOrdersListPage> {
                       margin: EdgeInsets.symmetric(vertical: 5),
                       width: double.infinity,
                       child: Text(
-                        'Pedido: 2015-05-23',
+                        'Pedido: ${RelativeTime.getRelativeTime(order.timestamp ?? 0)}',
                         style: TextStyle(
                             fontSize: 13
                         ),

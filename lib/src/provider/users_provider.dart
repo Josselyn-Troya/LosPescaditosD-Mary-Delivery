@@ -73,6 +73,31 @@ class UsersProvider {
     }
   }
 
+  Future<List<String>> getAdminNotification() async {
+    try {
+      Uri url = Uri.http(_url, '$_api/getAdminNotification');
+      Map<String, String> headers = {
+        'Content-type': 'application/json',
+        'Authorization': sessionUser.sessionToken
+      };
+      final res = await http.get(url, headers: headers);
+
+      if (res.statusCode == 401) { // NO AUTORIZADO
+        Fluttertoast.showToast(msg: 'Tu sesion expiro');
+        new SharedPrefe().logout(context, sessionUser.id);
+      }
+
+      final data = json.decode(res.body);
+      final tokens = List<String>.from(data);
+      return tokens;
+
+    }
+    catch(e) {
+      print('Error: $e');
+      return null;
+    }
+  }
+
 
 
   Future<Stream> createWithImage(User user, File image) async{
@@ -151,6 +176,34 @@ class UsersProvider {
       print('Error: $e');
       return null;
     }   
+  }
+
+  Future<ResponseApi> updateNotification(String idUser, String token) async {
+    try {
+      Uri url = Uri.http(_url, '$_api/updateNotification');
+      String bodyParams = json.encode({
+        'id': idUser,
+        'notification_token': token
+      });
+      Map<String, String> headers = {
+        'Content-type': 'application/json',
+        'Authorization': sessionUser.sessionToken
+      };
+      final res = await http.put(url, headers: headers, body: bodyParams);
+
+      if(res.statusCode == 401){
+        Fluttertoast.showToast(msg: 'Tu sesion expiro');
+        new SharedPrefe().logout(context, sessionUser.id);
+      }
+
+      final data = json.decode(res.body);
+      ResponseApi responseApi = ResponseApi.fromJson(data);
+      return responseApi;
+    }
+    catch(e) {
+      print('Error: $e');
+      return null;
+    }
   }
 
 

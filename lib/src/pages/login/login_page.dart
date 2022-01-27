@@ -61,7 +61,7 @@ Widget _imageLogo(){
       bottom: MediaQuery.of(context).size.height * 0.05
       ),
     child: Image.asset(
-            'assets/img/logopez.jpg',
+            'assets/img/logopez.png',
               width: 150,
               height: 150,
     )

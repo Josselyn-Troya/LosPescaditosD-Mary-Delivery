@@ -11,8 +11,8 @@ import 'package:lospescaditosdmary/src/models/order.dart';
 import 'package:lospescaditosdmary/src/models/response_api.dart';
 import 'package:lospescaditosdmary/src/models/user.dart';
 import 'package:lospescaditosdmary/src/provider/orders_provider.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:lospescaditosdmary/src/utils/my_colors.dart';
-import 'package:lospescaditosdmary/src/utils/my_validations.dart';
 import 'package:lospescaditosdmary/src/utils/shared_prefe.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -49,6 +49,8 @@ class DeliveryOrdersMapController {
 
   double _distanceDelivery;
 
+  IO.Socket socket;
+
   Future init(BuildContext context, Function refresh) async {
     this.context = context;
     this.refresh = refresh;
@@ -58,9 +60,32 @@ class DeliveryOrdersMapController {
     deliveryMarker = await createMarker('assets/img/pez.png');
     homeMarker = await createMarker('assets/img/hogar.png');
 
+    socket = IO.io('http://${Environment.API_DELIVERY}/orders/delivery', <String, dynamic> {
+      'transports' : ['websocket'],
+      'autoConnect' : false
+    });
+    socket.connect();
+
+
     checkGPS();
 
     refresh();
+  }
+
+
+  void saveLocation() async {
+    order.lat = _position.latitude;
+    order.lng = _position.longitude;
+    await _ordersProvider.updateLatLng(order);
+  }
+
+  void deliveryEmitPosition(){
+    socket.emit('position', {
+      'id_order': order.id,
+      'lat': _position.latitude,
+      'lng': _position.longitude,
+
+    });
   }
 
 
@@ -76,6 +101,7 @@ class DeliveryOrdersMapController {
 
   void dispose(){
     _positionStreamSubscription?.cancel();
+    socket?.disconnect();
   }
 
   void updateDelivered() async {
@@ -200,6 +226,7 @@ class DeliveryOrdersMapController {
     try {
       await _determinePosition(); // obtiene la posicion actual y solicita los permisos
       _position = await Geolocator.getLastKnownPosition(); // LAT Y LNG
+      saveLocation();
       animateCameraPosition(_position.latitude, _position.longitude);
 
       addMarker('delivery', _position.latitude, _position.longitude, 'Tu posición', '', deliveryMarker);
@@ -211,9 +238,15 @@ class DeliveryOrdersMapController {
       setPolylines(from, to);
 
       //cuando el delivery se mueva volvera a trazar la ruta para establecerlo en la posicion actual
-      _positionStreamSubscription = Geolocator.getPositionStream(desiredAccuracy: LocationAccuracy.best,
-      distanceFilter: 1).listen((Position position) {
+      _positionStreamSubscription = Geolocator.getPositionStream(
+          desiredAccuracy: LocationAccuracy.best,
+          distanceFilter: 1
+      ).listen((Position position) {
+
         _position = position;
+
+        deliveryEmitPosition();
+
         addMarker('delivery', _position.latitude, _position.longitude, 'Tu posición', '', deliveryMarker);
         animateCameraPosition(_position.latitude, _position.longitude);
         isCloseDeliveryPosition();

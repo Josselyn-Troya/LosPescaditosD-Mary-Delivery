@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lospescaditosdmary/src/models/product.dart';
+import 'package:lospescaditosdmary/src/utils/my_validations.dart';
 import 'package:lospescaditosdmary/src/utils/shared_prefe.dart';
+import 'package:lospescaditosdmary/src/widgets/no_data_widget.dart';
 
 class CustomerOrdersCreateController {
 
@@ -58,7 +60,13 @@ class CustomerOrdersCreateController {
   }
 
   void goToAddress() {
-    Navigator.pushNamed(context, 'customer/address/list');
+    if(selectedProducts.isEmpty){
+      MyValidations.show(context, 'No hay productos en el carrito');
+    }else{
+      Navigator.pushNamed(context, 'customer/address/list');
+
+    }
+
   }
 
 }

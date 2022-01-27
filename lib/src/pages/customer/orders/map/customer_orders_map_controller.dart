@@ -15,15 +15,13 @@ import 'package:lospescaditosdmary/src/utils/my_colors.dart';
 import 'package:lospescaditosdmary/src/utils/my_validations.dart';
 import 'package:lospescaditosdmary/src/utils/shared_prefe.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class CustomerOrdersMapController {
 
   BuildContext context;
   Function refresh;
   Position _position;
-
-  //obtener eventos en tiempo real o eventos ejecutandose constantemente
-  StreamSubscription _positionStreamSubscription;
 
   String addressName;
   LatLng addressLatLng;
@@ -48,6 +46,7 @@ class CustomerOrdersMapController {
   SharedPrefe _sharedPrefe = new SharedPrefe();
 
   double _distanceDelivery;
+  IO.Socket socket;
 
   Future init(BuildContext context, Function refresh) async {
     this.context = context;
@@ -57,6 +56,17 @@ class CustomerOrdersMapController {
     _ordersProvider.init(context, user);
     deliveryMarker = await createMarker('assets/img/pez.png');
     homeMarker = await createMarker('assets/img/hogar.png');
+
+    socket = IO.io('http://${Environment.API_DELIVERY}/orders/delivery', <String, dynamic> {
+      'transports': ['websocket'],
+      'autoConnect': false
+    });
+    socket.connect();
+
+    socket.on('position/${order.id}', (data) {
+      print('DATA EMITIDA: ${data}');
+      addMarker('delivery', data['lat'], data['lng'], 'Tu delivery', '', deliveryMarker);
+    });
 
     checkGPS();
 
@@ -75,19 +85,10 @@ class CustomerOrdersMapController {
   }
 
   void dispose(){
-    _positionStreamSubscription?.cancel();
+
+    socket?.disconnect();
   }
 
-  void updateDelivered() async {
-   // if(_distanceDelivery <= 200){
-      ResponseApi responseApi = await _ordersProvider.updateDelivered(order);
-   //   if(responseApi.success){
-        Navigator.pushNamedAndRemoveUntil(context, 'delivery/orders/list', (route) => false);
-     // }else{
-     //   MyValidations.show(context, 'Debe realizar la entrega antes de actualizar el estado');
-     // }
-    //}
-  }
 
   void phone() {
     launch("tel://${order?.customer?.phone}");
@@ -199,26 +200,17 @@ class CustomerOrdersMapController {
   void updateLocation() async{
     try {
       await _determinePosition(); // obtiene la posicion actual y solicita los permisos
-      _position = await Geolocator.getLastKnownPosition(); // LAT Y LNG
-      animateCameraPosition(_position.latitude, _position.longitude);
 
-      addMarker('delivery', _position.latitude, _position.longitude, 'Tu posición', '', deliveryMarker);
+      animateCameraPosition(order.lat, order.lng);
+      addMarker('delivery', order.lat, order.lng, 'Tu delivery', '', deliveryMarker);
+
       addMarker('home', order.address.lat, order.address.lng, 'Lugar de entrega', '', homeMarker);
 
-      LatLng from = new LatLng(_position.latitude, _position.longitude);
+      LatLng from = new LatLng(order.lat, order.lng);
       LatLng to = new LatLng(order.address.lat, order.address.lng);
 
       setPolylines(from, to);
-
-      //cuando el delivery se mueva volvera a trazar la ruta para establecerlo en la posicion actual
-      _positionStreamSubscription = Geolocator.getPositionStream(desiredAccuracy: LocationAccuracy.best,
-      distanceFilter: 1).listen((Position position) {
-        _position = position;
-        addMarker('delivery', _position.latitude, _position.longitude, 'Tu posición', '', deliveryMarker);
-        animateCameraPosition(_position.latitude, _position.longitude);
-        isCloseDeliveryPosition();
-        refresh();
-      });
+      refresh();
 
     } catch (e) {
       print('Erorr: $e');

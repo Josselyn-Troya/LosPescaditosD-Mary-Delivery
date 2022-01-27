@@ -5,6 +5,7 @@ import 'package:lospescaditosdmary/src/models/order.dart';
 import 'package:lospescaditosdmary/src/models/product.dart';
 import 'package:lospescaditosdmary/src/models/response_api.dart';
 import 'package:lospescaditosdmary/src/models/user.dart';
+import 'package:lospescaditosdmary/src/provider/notification_provider.dart';
 import 'package:lospescaditosdmary/src/provider/orders_provider.dart';
 import 'package:lospescaditosdmary/src/provider/users_provider.dart';
 import 'package:lospescaditosdmary/src/utils/shared_prefe.dart';
@@ -31,6 +32,8 @@ class AdminOrdersDetailController {
 
   String idDelivery;
 
+  NotificationProvider notificationProvider = new NotificationProvider();
+
   Future init(BuildContext context, Function refresh, Order order) async {
     this.context = context;
     this.refresh = refresh;
@@ -44,11 +47,22 @@ class AdminOrdersDetailController {
     refresh();
   }
 
+  void sendNotification(String tokenDelivery){
+    Map<String, dynamic> data = {
+      'click_action': 'FLUTTER_NOTIFICATION_CLICK'
+    };
+    notificationProvider.sendMessage(tokenDelivery, data, 'PEDIDO ASIGNADO', 'Tienes una orden asignada');
+  }
+
   void updateOrder() async {
     if (idDelivery != null) {
       order.idDelivery = idDelivery;
       ResponseApi responseApi = await _ordersProvider.updateDespatched(order);
-
+      
+      User deliveryUser = await _usersProvider.getById(order.idDelivery);
+      print('TOKEN DEL DELIVERY DE LAS NOTIFICACIONES ${deliveryUser.notificationToken}');
+      sendNotification(deliveryUser.notificationToken);
+      
       Fluttertoast.showToast(msg: responseApi.message, toastLength: Toast.LENGTH_LONG);
       Navigator.pop(context, true);
     }

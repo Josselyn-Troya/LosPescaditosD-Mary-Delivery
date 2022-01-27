@@ -20,7 +20,7 @@ class _CustomerAddressListPageState extends State<CustomerAddressListPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    SchedulerBinding.instance.addPersistentFrameCallback((timeStamp) {
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
       _con.init(context, refresh);
     });
   }
@@ -76,6 +76,7 @@ class _CustomerAddressListPageState extends State<CustomerAddressListPage> {
           if (snapshot.hasData) {
             if (snapshot.data.length > 0) {
               return ListView.builder(
+                  shrinkWrap: true,
                   padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
                   itemCount: snapshot.data?.length ?? 0,
                   itemBuilder: (_, index) {
@@ -184,7 +185,7 @@ class _CustomerAddressListPageState extends State<CustomerAddressListPage> {
       child: ElevatedButton(
         onPressed: _con.createOrder,
         child: Text(
-          'ACEPTAR'
+          'CREAR ORDEN NUEVA'
         ),
         style: ElevatedButton.styleFrom(
           shape: RoundedRectangleBorder(

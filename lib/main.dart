@@ -1,3 +1,5 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:lospescaditosdmary/src/pages/admin/categories/create/admin_categories_create_page.dart';
 import 'package:lospescaditosdmary/src/pages/admin/orders/list/admin_orders_list_page.dart';
@@ -15,9 +17,23 @@ import 'package:lospescaditosdmary/src/pages/delivery/orders/map/delivery_orders
 import 'package:lospescaditosdmary/src/pages/login/login_page.dart';
 import 'package:lospescaditosdmary/src/pages/register/register_page.dart';
 import 'package:lospescaditosdmary/src/pages/roles/roles_pages.dart';
+import 'package:lospescaditosdmary/src/provider/notification_provider.dart';
 import 'package:lospescaditosdmary/src/utils/my_colors.dart';
 
-void main() {
+NotificationProvider notificationProvider = new NotificationProvider();
+
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  // If you're going to use other Firebase services in the background, such as Firestore,
+  // make sure you call `initializeApp` before using other Firebase services.
+  await Firebase.initializeApp();
+  print('Handling a background message ${message.messageId}');
+}
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  notificationProvider.initNotifications();
   runApp(MyApp());
 }
 
@@ -29,6 +45,14 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    notificationProvider.onMessageListener();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

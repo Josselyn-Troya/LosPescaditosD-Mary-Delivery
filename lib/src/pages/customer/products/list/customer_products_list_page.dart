@@ -7,7 +7,10 @@ import 'package:lospescaditosdmary/src/utils/my_colors.dart';
 import 'package:lospescaditosdmary/src/widgets/no_data_widget.dart';
 
 class CustomerProductsListPage extends StatefulWidget {
-  const CustomerProductsListPage({ Key key }) : super(key: key);
+
+  Product product;
+
+  CustomerProductsListPage({ Key key, @required this.product }) : super(key: key);
 
   @override
   _CustomerProductsListPageState createState() => _CustomerProductsListPageState();
@@ -23,7 +26,7 @@ class _CustomerProductsListPageState extends State<CustomerProductsListPage> {
     super.initState();
 
     SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
-      _con.init(context, refresh);
+      _con.init(context, refresh, widget.product);
     });
   }
 
@@ -45,7 +48,7 @@ class _CustomerProductsListPageState extends State<CustomerProductsListPage> {
             ],
             flexibleSpace: Column(
               children: [
-                SizedBox(height: 50),
+                SizedBox(height: 35),
                 _menuDrawer(),
                 _textFieldSearch()
               ],
@@ -69,7 +72,7 @@ class _CustomerProductsListPageState extends State<CustomerProductsListPage> {
         body: TabBarView(
           children: _con.categories.map((Category category) {
             return FutureBuilder( //listar info de la base de datos 
-                future:_con.getProducts(category.id),
+                future:_con.getProducts(category.id, _con.productName),
                 builder: (context, AsyncSnapshot<List<Product>> snapshot) {
 
                   if (snapshot.hasData) { //si tiene informacion
@@ -79,7 +82,7 @@ class _CustomerProductsListPageState extends State<CustomerProductsListPage> {
                           padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
                           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 2,
-                              childAspectRatio: 0.6
+                              childAspectRatio: 0.7
                           ),
                           itemCount: snapshot.data?.length ?? 0,
                           itemBuilder: (_, index) {
@@ -108,7 +111,6 @@ class _CustomerProductsListPageState extends State<CustomerProductsListPage> {
         _con.openBottomSheet(product);
       },
       child: Container(
-        height: 250,
         child: Card(
           elevation: 3.0,
           shape: RoundedRectangleBorder(
@@ -117,20 +119,25 @@ class _CustomerProductsListPageState extends State<CustomerProductsListPage> {
           child: Stack(
             children: [
               Positioned(
-                  top: -1.0,
-                  right: -1.0,
+                  top: 200,
+                  right: 1.0,
                   child: Container(
-                    width: 40,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      color: MyColors.primaryColor,
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(15),
-                        topRight: Radius.circular(20),
-                      )
+                      width: 80,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        color: MyColors.primaryColor,
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(15),
+                          topLeft: Radius.circular(15),
+                          bottomRight: Radius.circular(20)
+                        )
+                      ),
+                      child: IconButton(
+                        onPressed: _con.addToCar,
+                        icon: Icon(Icons.add),
+                        color: Colors.white,),
                     ),
-                    child: Icon(Icons.add, color: Colors.white,),
-                  )
+
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -138,7 +145,7 @@ class _CustomerProductsListPageState extends State<CustomerProductsListPage> {
                   Container(
                     height: 150,
                     margin: EdgeInsets.only(top: 20),
-                    width: MediaQuery.of(context).size.width * 0.45,
+                    width: MediaQuery.of(context).size.width * 0.6,
                     padding: EdgeInsets.all(20),
                     child: FadeInImage(
                       image: product.image1 != null
@@ -164,7 +171,7 @@ class _CustomerProductsListPageState extends State<CustomerProductsListPage> {
                   ),
                   Spacer(),
                   Container(
-                    margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                    margin: EdgeInsets.symmetric(horizontal: 20, vertical: 6.5),
                     child: Text(
                       '${product.price ?? 0}\$',
                       style: TextStyle(
@@ -197,18 +204,6 @@ class _CustomerProductsListPageState extends State<CustomerProductsListPage> {
               color: Colors.black,
             ),
           ),
-          Positioned(
-            right: 16,
-            top: 15,
-            child: Container(
-              width: 9,
-              height: 9,
-              decoration: BoxDecoration(
-                color: Colors.green,
-                borderRadius: BorderRadius.all(Radius.circular(30))
-              ),
-            )
-          )
         ],
       ),
     );
@@ -218,8 +213,7 @@ class _CustomerProductsListPageState extends State<CustomerProductsListPage> {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       child: TextField(
-
-      
+        onChanged: _con.searchText,
         decoration: InputDecoration(
           hintText: 'Buscar',
           suffixIcon: Icon(
