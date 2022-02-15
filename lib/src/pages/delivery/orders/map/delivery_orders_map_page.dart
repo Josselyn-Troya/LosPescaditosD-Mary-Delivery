@@ -76,7 +76,7 @@ class _DeliveryOrdersMapPageState extends State<DeliveryOrdersMapPage> {
         child: Column(
           children: [
             _listAddress(_con.order?.address?.neighborhood, 'Barrio', Icons.my_location),
-            _listAddress(_con.order?.address?.address, 'Direccion', Icons.location_on),
+            _listAddress(_con.order?.address?.address, 'Dirección', Icons.location_on),
             Divider(color: Colors.grey[400], endIndent: 30, indent: 30,),
             _customerInfo(),
             _buttonAccept()
@@ -94,13 +94,15 @@ class _DeliveryOrdersMapPageState extends State<DeliveryOrdersMapPage> {
           Container(
             height: 50,
             width: 50,
-            child: FadeInImage(
-              image: _con.order?.customer?.image != null
-                  ? NetworkImage(_con.order.customer?.image)
-                  : AssetImage('assets/img/no-image.png'),
-              fit: BoxFit.cover,
-              fadeInDuration: Duration(milliseconds: 50),
-              placeholder: AssetImage('assets/img/no-image.png'),
+            child: ClipOval(
+              child: FadeInImage(
+                image: _con.order?.customer?.image != null
+                    ? NetworkImage(_con.order.customer?.image)
+                    : AssetImage('assets/img/no-image.png'),
+                fit: BoxFit.cover,
+                fadeInDuration: Duration(milliseconds: 50),
+                placeholder: AssetImage('assets/img/no-image.png'),
+              ),
             ),
           ),
           Container(

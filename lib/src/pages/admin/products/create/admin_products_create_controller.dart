@@ -69,7 +69,7 @@ class AdminProductsCreateController {
       return;
     }
     if(idCategory == null){
-      MyValidations.show(context, 'Debe seleccionar la categoria del producto');
+      MyValidations.show(context, 'Debe seleccionar la categoría del producto');
       return;
     }
 
@@ -85,7 +85,7 @@ class AdminProductsCreateController {
     images.add(imageFile1);
     images.add(imageFile2);
 
-    _progressDialog.show(max: 100, msg: 'Espere un momento');
+    _progressDialog.show(max: 100, msg: 'Espere un momento por favor');
 
     Stream stream = await _productsProvider.create(product, images);
     stream.listen((res) {
@@ -138,18 +138,11 @@ class AdminProductsCreateController {
         child: Text('GALERIA')
     );
 
-    Widget cameraButton = ElevatedButton(
-        onPressed: () {
-          selectImage(ImageSource.camera, numberFile);
-        },
-        child: Text('CAMARA')
-    );
 
     AlertDialog alertDialog = AlertDialog(
       title: Text('Selecciona tu imagen'),
       actions: [
-        galleryButton,
-        cameraButton
+        galleryButton
       ],
     );
 

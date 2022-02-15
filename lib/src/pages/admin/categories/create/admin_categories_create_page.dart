@@ -27,13 +27,13 @@ class _AdminCategoriesCreatePageState extends State<AdminCategoriesCreatePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Nueva categoria'),
+        title: Text('Crear una nueva categoría'),
       ),
       body: Column(
         children: [
           SizedBox(height: 30),
           _textFieldName(),
-          _textFieldDescription()
+
         ],
       ),
       bottomNavigationBar: _buttonCreate(),
@@ -50,8 +50,9 @@ class _AdminCategoriesCreatePageState extends State<AdminCategoriesCreatePage> {
       ),
       child: TextField(
         controller: _con.nameController,
+        maxLines: 2,
         decoration: InputDecoration(
-            hintText: 'Nombre de la categoria',
+            hintText: 'Nombre de la categoría nueva',
             border: InputBorder.none,
             contentPadding: EdgeInsets.all(15),
             hintStyle: TextStyle(
@@ -61,34 +62,6 @@ class _AdminCategoriesCreatePageState extends State<AdminCategoriesCreatePage> {
               Icons.list_alt,
               color: MyColors.primaryColor,
             )
-        ),
-      ),
-    );
-  }
-
-  Widget _textFieldDescription() {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 50, vertical: 5),
-      padding: EdgeInsets.all(10),
-      decoration: BoxDecoration(
-          color: MyColors.primaryColor3,
-          borderRadius: BorderRadius.circular(30)
-      ),
-      child: TextField(
-        controller: _con.descriptionController,
-        maxLines: 3,
-        maxLength: 255,
-        decoration: InputDecoration(
-            hintText: 'Descripción de la categoria',
-            border: InputBorder.none,
-            contentPadding: EdgeInsets.all(15),
-            hintStyle: TextStyle(
-                color: Colors.black54
-            ),
-            suffixIcon: Icon(
-              Icons.description,
-              color: MyColors.primaryColor,
-            ),
         ),
       ),
     );

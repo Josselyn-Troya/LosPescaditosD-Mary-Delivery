@@ -144,7 +144,7 @@ class _CustomerOrdersCreatePageState extends State<CustomerOrdersCreatePage> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween, ////////////////
         children: [
           Text(
-            'Total:',
+            'Total a pagar:',
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 22

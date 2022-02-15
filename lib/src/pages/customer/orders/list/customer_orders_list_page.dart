@@ -134,7 +134,7 @@ class _CustomerOrdersListPageState extends State<CustomerOrdersListPage> {
                       margin: EdgeInsets.symmetric(vertical: 5),
                       width: double.infinity,
                       child: Text(
-                        'Pedido: ${RelativeTime.getRelativeTime(order.timestamp ?? 0)}',
+                        'Fecha del pedido: ${RelativeTime.getRelativeTime(order.timestamp ?? 0)}',
                         style: TextStyle(
                             fontSize: 13
                         ),
@@ -157,7 +157,7 @@ class _CustomerOrdersListPageState extends State<CustomerOrdersListPage> {
                       width: double.infinity,
                       margin: EdgeInsets.symmetric(vertical: 5),
                       child: Text(
-                        'Entregar en: ${order.address?.address ?? ''}',
+                        'Dirección: ${order.address?.address ?? ''}',
                         style: TextStyle(
                             fontSize: 13
                         ),

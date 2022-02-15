@@ -5,7 +5,9 @@ import 'package:lospescaditosdmary/src/models/product.dart';
 import 'package:lospescaditosdmary/src/models/response_api.dart';
 import 'package:lospescaditosdmary/src/models/user.dart';
 import 'package:lospescaditosdmary/src/provider/address_provider.dart';
+import 'package:lospescaditosdmary/src/provider/notification_provider.dart';
 import 'package:lospescaditosdmary/src/provider/orders_provider.dart';
+import 'package:lospescaditosdmary/src/provider/users_provider.dart';
 import 'package:lospescaditosdmary/src/utils/my_validations.dart';
 import 'package:lospescaditosdmary/src/utils/shared_prefe.dart';
 
@@ -25,6 +27,11 @@ class  CustomerAddressListController {
 
   OrdersProvider _ordersProvider = new OrdersProvider();
 
+  ///
+  NotificationProvider notificationProvider = new NotificationProvider();
+  UsersProvider _usersProvider = new UsersProvider();
+  List<String> tokens =[];
+
   Future init(BuildContext context, Function refresh) async{
     this.context = context;
     this.refresh= refresh;
@@ -33,7 +40,26 @@ class  CustomerAddressListController {
     _addressProvider.init(context, user);
     _ordersProvider.init(context, user);
 
+    ///
+
+
     refresh();
+  }
+
+
+  void sendNotification(){
+
+    List<String> registration_ids = [];
+    tokens.forEach((token) {
+      if(token != null){
+        registration_ids.add(token);
+      }
+    });
+
+    Map<String, dynamic> data = {
+      'click_action': 'FLUTTER_NOTIFICATION_CLICK'
+    };
+    notificationProvider.sendMultipleMessage(registration_ids, data, 'ORDEN NUEVA', 'Un cliente ha realizado un pedido nuevo');
   }
 
 
@@ -50,6 +76,10 @@ class  CustomerAddressListController {
       MyValidations.show(context, 'No se selecciono ninguna dirección');
     }else{
       Navigator.pushNamedAndRemoveUntil(context, 'customer/products/list', (route) => false);
+      ///
+      _usersProvider.init(context, sessionUser: user);
+      tokens = await _usersProvider.getAdminNotification();
+      sendNotification();
       MyValidations.show(context, 'Orden creada correctamente, revisar en "Mis compras');
     }
 

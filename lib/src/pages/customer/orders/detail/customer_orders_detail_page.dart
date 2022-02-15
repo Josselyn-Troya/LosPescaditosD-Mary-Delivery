@@ -59,9 +59,9 @@ class _CustomerOrdersDetailPageState extends State<CustomerOrdersDetailPage> {
               ),
               SizedBox(height: 10),
               _textData('Repartidor:', '${_con.order?.delivery?.name ?? 'No asignado'} ${_con.order?.delivery?.lastname ?? ''}'),
-              _textData('Entregar en:', '${_con.order?.address?.address ?? ''}'),
+              _textData('Dirección:', '${_con.order?.address?.address ?? ''}'),
               _textData(
-                  'Fecha de pedido:',
+                  'Fecha del pedido:',
                   '${RelativeTime.getRelativeTime(_con.order.timestamp ?? 0)}'
               ),
               _con.order?.status == 'EN CAMINO' ? _buttonNext() : Container()
@@ -133,30 +133,48 @@ class _CustomerOrdersDetailPageState extends State<CustomerOrdersDetailPage> {
         children: [
           _imageProduct(product),
           SizedBox(width: 10),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                product?.name ?? '',
-                style: TextStyle(
-                    fontWeight: FontWeight.bold
-                ),
-              ),
-              SizedBox(height: 10),
-              Text(
-                'Cantidad: ${product.quantity}',
-                style: TextStyle(
-                    fontSize: 13
-                ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    product?.name ?? '',
+
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold
+                    ),
+                  ),
+                  _textPrice(product),
+                  SizedBox(height: 10),
+                  Text(
+                    'Cantidad: ${product.quantity}',
+                    style: TextStyle(
+                        fontSize: 13
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
-
         ],
       ),
     );
   }
 
+  Widget _textPrice(Product product) {
+    return Container(
+      margin: EdgeInsets.only(top: 10),
+      child: Text(
+        '${product.price* product.quantity}\$',
+        style: TextStyle(
+            color: Colors.grey,
+            fontWeight: FontWeight.bold
+        ),
+      ),
+    );
+  }
 
   Widget _imageProduct(Product product) {
     return Container(

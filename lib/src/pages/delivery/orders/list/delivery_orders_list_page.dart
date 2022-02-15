@@ -139,7 +139,7 @@ class _DeliveryOrdersListPageState extends State<DeliveryOrdersListPage> {
                       margin: EdgeInsets.symmetric(vertical: 5),
                       width: double.infinity,
                       child: Text(
-                        'Pedido: ${RelativeTime.getRelativeTime(order.timestamp ?? 0)}',
+                        'Fecha del pedido: ${RelativeTime.getRelativeTime(order.timestamp ?? 0)}',
                         style: TextStyle(
                             fontSize: 13
                         ),
@@ -162,7 +162,7 @@ class _DeliveryOrdersListPageState extends State<DeliveryOrdersListPage> {
                       width: double.infinity,
                       margin: EdgeInsets.symmetric(vertical: 5),
                       child: Text(
-                        'Entregar en: ${order.address?.address ?? ''}',
+                        'Dirección: ${order.address?.address ?? ''}',
                         style: TextStyle(
                             fontSize: 13
                         ),
@@ -207,13 +207,15 @@ class _DeliveryOrdersListPageState extends State<DeliveryOrdersListPage> {
                 Container(
                   height: 60,
                   margin: EdgeInsets.only(bottom: 10),
-                  child: FadeInImage(
-                    image: _con.user?.image != null
-                        ? NetworkImage(_con.user?.image)
-                        : AssetImage('assets/img/no-image.png'),
-                    fit: BoxFit.contain,
-                    fadeInDuration: Duration(milliseconds: 50),
-                    placeholder: AssetImage('assets/img/no-image.png'),
+                  child: ClipOval(
+                    child: FadeInImage(
+                      image: _con.user?.image != null
+                          ? NetworkImage(_con.user?.image)
+                          : AssetImage('assets/img/no-image.png'),
+                      fit: BoxFit.contain,
+                      fadeInDuration: Duration(milliseconds: 50),
+                      placeholder: AssetImage('assets/img/no-image.png'),
+                    ),
                   ),
                 ),
 
@@ -251,8 +253,8 @@ class _DeliveryOrdersListPageState extends State<DeliveryOrdersListPage> {
           _con.user.roles.length > 1 ?
           ListTile(
             onTap: _con.goToRoles,
-            title: Text('Seleccionar rol'),
-            trailing: Icon(Icons.person_outline),
+            title: Text('Seleccionar otro usuario para ingresar'),
+            trailing: Icon(Icons.supervised_user_circle_rounded),
           ) : Container() : Container(),
           ListTile(
             onTap: _con.logout,

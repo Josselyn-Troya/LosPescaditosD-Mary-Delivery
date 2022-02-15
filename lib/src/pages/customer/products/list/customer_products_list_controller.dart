@@ -28,53 +28,22 @@ class CustomerProductsListController {
   Timer searchOnStopped;
   String productName = '';
 
-  ///
-  NotificationProvider notificationProvider = new NotificationProvider();
-  UsersProvider _usersProvider = new UsersProvider();
-  List<String> tokens =[];
-
-  //////
-  Product product;
-  int counter = 1;
-  List<Product> selectedProducts = [];
 
   Future init(BuildContext context, Function refresh, Product product) async{
     this.context = context; 
     this.refresh = refresh;
-    this.product = product;
     user = User.fromJson(await _sharedPrefe.read('user'));
     _categoriesProvider.init(context, user);
     _productsProvider.init(context, user);
 
-    ///
-    _usersProvider.init(context, sessionUser: user);
-    tokens = await _usersProvider.getAdminNotification();
-    sendNotification();
 
     getCategories();
 
-    selectedProducts = Product.fromJsonList(await _sharedPrefe.read('order')).toList;
-    selectedProducts.forEach((p) {
-      print('Producto seleccionado: ${p.toJson()}');
-    });
+
 
     refresh();
   }
 
-  void sendNotification(){
-
-    List<String> registration_ids = [];
-    tokens.forEach((token) {
-      if(token != null){
-        registration_ids.add(token);
-      }
-    });
-
-    Map<String, dynamic> data = {
-      'click_action': 'FLUTTER_NOTIFICATION_CLICK'
-    };
-    notificationProvider.sendMultipleMessage(registration_ids, data, 'ORDEN NUEVA', 'Un cliente ha realizado un pedido nuevo');
-  }
 
   void searchText(String text) {
     Duration duration = Duration(microseconds: 200);
@@ -137,17 +106,5 @@ class CustomerProductsListController {
     Navigator.pushNamed(context, 'customer/orders/list');
   }
 
-  void addToCar(){
-    int index = selectedProducts.indexWhere((p) => p.id == product.id);
-    if(index == -1 ){ //si en los productos selecionados no existe ese producto
-      if(product.quantity == null){
-        product.quantity = 1;
-      }
-      selectedProducts.add(product);
-    }else{
-      selectedProducts[index].quantity=counter;
-    }
-    _sharedPrefe.save('order', selectedProducts);
-    Fluttertoast.showToast(msg: 'Producto agregado');
-  }
+
 }

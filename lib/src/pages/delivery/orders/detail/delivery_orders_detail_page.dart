@@ -59,9 +59,9 @@ class _DeliveryOrdersDetailPageState extends State<DeliveryOrdersDetailPage> {
               ),
               SizedBox(height: 10),
               _textData('Cliente:', '${_con.order.customer?.name ?? ''} ${_con.order.customer?.lastname ?? ''}'),
-              _textData('Entregar en:', '${_con.order.address?.address ?? ''}'),
+              _textData('Dirección:', '${_con.order.address?.address ?? ''}'),
               _textData(
-                  'Fecha de pedido:',
+                  'Fecha del pedido:',
                   '${RelativeTime.getRelativeTime(_con.order.timestamp ?? 0)}'
               ),
               _con.order.status != 'ENTREGADO' ? _buttonNext() : Container()
@@ -76,6 +76,19 @@ class _DeliveryOrdersDetailPageState extends State<DeliveryOrdersDetailPage> {
         }).toList(),
       )
           : NoDataWidget(text: 'Ningun producto agregado',),
+    );
+  }
+
+  Widget _textPrice(Product product) {
+    return Container(
+      margin: EdgeInsets.only(top: 10),
+      child: Text(
+        '${product.price * product.quantity}\$',
+        style: TextStyle(
+            color: Colors.grey,
+            fontWeight: FontWeight.bold
+        ),
+      ),
     );
   }
 
@@ -142,6 +155,7 @@ class _DeliveryOrdersDetailPageState extends State<DeliveryOrdersDetailPage> {
                     fontWeight: FontWeight.bold
                 ),
               ),
+              _textPrice(product),
               SizedBox(height: 10),
               Text(
                 'Cantidad: ${product.quantity}',

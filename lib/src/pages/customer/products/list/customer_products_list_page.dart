@@ -118,33 +118,12 @@ class _CustomerProductsListPageState extends State<CustomerProductsListPage> {
           ),
           child: Stack(
             children: [
-              Positioned(
-                  top: 200,
-                  right: 1.0,
-                  child: Container(
-                      width: 80,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        color: MyColors.primaryColor,
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(15),
-                          topLeft: Radius.circular(15),
-                          bottomRight: Radius.circular(20)
-                        )
-                      ),
-                      child: IconButton(
-                        onPressed: _con.addToCar,
-                        icon: Icon(Icons.add),
-                        color: Colors.white,),
-                    ),
-
-              ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
                     height: 150,
-                    margin: EdgeInsets.only(top: 20),
+                    margin: EdgeInsets.only(top: 10),
                     width: MediaQuery.of(context).size.width * 0.6,
                     padding: EdgeInsets.all(20),
                     child: FadeInImage(
@@ -156,22 +135,26 @@ class _CustomerProductsListPageState extends State<CustomerProductsListPage> {
                       placeholder: AssetImage('assets/img/no-image.png'),
                     ),
                   ),
+                  Row(
+                    children: [
+                      Container(
+                        margin: EdgeInsets.symmetric(horizontal: 20),
+                        height: 33,
+                        child: Text(
+                          product.name ?? '',
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontFamily: 'NimbusSans'
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+
                   Container(
                     margin: EdgeInsets.symmetric(horizontal: 20),
-                    height: 33,
-                    child: Text(
-                      product.name ?? '',
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontFamily: 'NimbusSans'
-                      ),
-                    ),
-                  ),
-                  Spacer(),
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: 20, vertical: 6.5),
                     child: Text(
                       '${product.price ?? 0}\$',
                       style: TextStyle(
@@ -198,7 +181,7 @@ class _CustomerProductsListPageState extends State<CustomerProductsListPage> {
       child: Stack(
         children: [
           Container(
-            margin: EdgeInsets.only(right: 15, top: 13),
+            margin: EdgeInsets.only(right: 15),
             child: Icon(
               Icons.shopping_cart_outlined,
               color: Colors.black,
@@ -270,13 +253,15 @@ class _CustomerProductsListPageState extends State<CustomerProductsListPage> {
               Container(
                 height: 60,
                 margin: EdgeInsets.only(bottom: 10),
-                child: FadeInImage(
-                  image: _con.user?.image != null 
-                    ? NetworkImage(_con.user?.image)
-                    : AssetImage('assets/img/no-image.png'),
-                  fit: BoxFit.contain,
-                  fadeInDuration: Duration(milliseconds: 10),
-                  placeholder: AssetImage('assets/img/no-image.png'),
+                child: ClipOval(
+                  child: FadeInImage(
+                    image: _con.user?.image != null 
+                      ? NetworkImage(_con.user?.image)
+                      : AssetImage('assets/img/no-image.png'),
+                    fit: BoxFit.contain,
+                    fadeInDuration: Duration(milliseconds: 10),
+                    placeholder: AssetImage('assets/img/no-image.png'),
+                  ),
                 ),
               ),
 
@@ -324,8 +309,8 @@ class _CustomerProductsListPageState extends State<CustomerProductsListPage> {
           _con.user.roles.length > 1 ?
           ListTile(
             onTap: _con.goToRoles,
-            title: Text('Roles'),
-            trailing: Icon(Icons.person),
+            title: Text('Seleccionar otro usuario para ingresar'),
+            trailing: Icon(Icons.supervised_user_circle_rounded),
           ) : Container() : Container(),
           
           ListTile(

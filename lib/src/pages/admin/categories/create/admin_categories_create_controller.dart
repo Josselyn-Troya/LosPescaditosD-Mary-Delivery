@@ -13,7 +13,6 @@ class AdminCategoriesCreateController {
   Function refresh;
 
   TextEditingController nameController = new TextEditingController();
-  TextEditingController descriptionController = new TextEditingController();
 
   CategoriesProvider _categoriesProvider = new CategoriesProvider();
   User user;
@@ -29,19 +28,16 @@ class AdminCategoriesCreateController {
 
   void createCategory() async {
     String name = nameController.text;
-    String description = descriptionController.text;
 
-    if (name.isEmpty || description.isEmpty) {
+    if (name.isEmpty ) {
       MyValidations.show(context, 'Debe llenar todos los campos');
       return;
     }else{
       nameController.text = '';
-      descriptionController.text = '';
     }
 
     Category category = new Category(
       name: name,
-      description: description
     );
 
     ResponseApi responseApi = await _categoriesProvider.create(category);

@@ -2,12 +2,14 @@ import 'dart:io';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lospescaditosdmary/src/models/response_api.dart';
 import 'package:lospescaditosdmary/src/models/user.dart';
 import 'package:lospescaditosdmary/src/provider/users_provider.dart';
 import 'package:lospescaditosdmary/src/utils/my_validations.dart';
 import 'package:sn_progress_dialog/progress_dialog.dart';
+import 'package:email_validator/email_validator.dart';
 
 
 class RegisterController {
@@ -29,16 +31,17 @@ class RegisterController {
 
   bool isEnable = true;
 
+  bool _isValid = false;
 
 
-  Future init(BuildContext context, Function refresh){
+  Future init(BuildContext context, Function refresh) {
     this.context = context;
     this.refresh = refresh;
     usersProvider.init(context);
     _progressDialog = ProgressDialog(context: context);
   }
 
-  void register () async {
+  void register() async {
     String email = emailController.text.trim();
     String name = nameController.text;
     String lastname = lastnameController.text;
@@ -46,11 +49,25 @@ class RegisterController {
     String password = passwordController.text.trim();
     String confirmPassword = confirmPasswordController.text.trim();
 
+    _isValid = EmailValidator.validate(emailController.text);
+    if (_isValid) {
+      Fluttertoast.showToast(
+          msg: "Email valido",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.TOP,
+          timeInSecForIosWeb: 1,
+          fontSize: 16.0);
+        } else {
+      MyValidations.show(context, 'Ingrese un correo electronico valido');
+      return;
+    }
+
     if(email.isEmpty || name.isEmpty || lastname.isEmpty || phone.isEmpty || password.isEmpty || confirmPassword.isEmpty){
       MyValidations.show(context, 'Debes completar todos los campos');
       
       return;
     }
+
 
     if(confirmPassword != password){
       MyValidations.show(context, 'Las contraseñas no son iguales');
@@ -62,10 +79,10 @@ class RegisterController {
       return;
     }
 
-    /* if(imageFile == null){
+     if(imageFile == null){
       MyValidations.show(context, 'Seleccione una imagen');
       return;
-    } */
+    }
 
     _progressDialog.show(max: 100, msg: 'Cargando');
     isEnable = false;
@@ -124,18 +141,12 @@ class RegisterController {
         child: Text('GALERIA')
     );
 
-    Widget cameraButton = ElevatedButton(
-        onPressed: () {
-          selectImage(ImageSource.camera);
-        },
-        child: Text('CAMARA')
-    );
+
 
     AlertDialog alertDialog = AlertDialog(
       title: Text('Selecciona tu imagen'),
       actions: [
-        galleryButton,
-        cameraButton
+        galleryButton
       ],
     );
 

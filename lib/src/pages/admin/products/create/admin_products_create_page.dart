@@ -30,7 +30,7 @@ class _AdminProductsCreatePageState extends State<AdminProductsCreatePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Nuevo producto'),
+        title: Text('Crear un nuevo producto'),
       ),
       body: ListView(
         children: [
@@ -150,7 +150,7 @@ class _AdminProductsCreatePageState extends State<AdminProductsCreatePage> {
           elevation: 3.0,
           child: Container(
            height: 100,
-            width: MediaQuery.of(context).size.width * 0.26,
+            width: MediaQuery.of(context).size.width * 0.2,
             
             child: Image.file(
               imageFile,
@@ -184,10 +184,7 @@ class _AdminProductsCreatePageState extends State<AdminProductsCreatePage> {
             child: Column(
               children: [
                 Row(children: [
-                  Icon(
-                      Icons.search,
-                      color: MyColors.primaryColor,
-                    ),
+
                     SizedBox(width: 15),
                     Text(
                       'Categorias',
@@ -211,7 +208,7 @@ class _AdminProductsCreatePageState extends State<AdminProductsCreatePage> {
                     elevation: 3,
                     isExpanded: true,
                     hint: Text(
-                      'Selecionar categoria',
+                      'Selecionae una categoría',
                       style: TextStyle(
                         color: Colors.grey,
                         fontSize: 16

@@ -34,18 +34,16 @@ class _CustomerAddressListPageState extends State<CustomerAddressListPage> {
           _iconAddress()
         ],
       ),
+     
      body: Stack(
         children: [
-          Positioned(
-            top: 0,
-            child: _textSelectAddress()
-            ),
+
           SingleChildScrollView(
              child: Container(
-               margin: EdgeInsets.only(top: 50),
+               margin: EdgeInsets.only(top: 20),
                child: _listAddress()
                ),
-           )             
+           )
         ],
       ),
       
@@ -69,29 +67,41 @@ class _CustomerAddressListPageState extends State<CustomerAddressListPage> {
   }
 
   Widget _listAddress() {
-    return FutureBuilder(
-        future: _con.getAddress(),
-        builder: (context, AsyncSnapshot<List<Address>> snapshot) {
-
-          if (snapshot.hasData) {
-            if (snapshot.data.length > 0) {
-              return ListView.builder(
-                  shrinkWrap: true,
-                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-                  itemCount: snapshot.data?.length ?? 0,
-                  itemBuilder: (_, index) {
-                    return _radioSelectorAddress(snapshot.data[index], index);
-                  }
-              );
+    return Column(
+      children: [
+        Text(
+          'Elige donde recibir tu comida',
+          style: TextStyle(
+              fontSize: 19,
+              fontWeight: FontWeight.bold
+          ),
+        ),
+        FutureBuilder(
+            future: _con.getAddress(),
+            builder: (context, AsyncSnapshot<List<Address>> snapshot) {
+              if (snapshot.hasData) {
+                if (snapshot.data.length > 0) {
+                  return ListView.builder(
+                      scrollDirection: Axis.vertical,
+                      physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                      itemCount: snapshot.data?.length ?? 0,
+                      itemBuilder: (_, index) {
+                        return _radioSelectorAddress(snapshot.data[index], index);
+                      }
+                  );
+                }
+                else {
+                  return _noAddress();
+                }
+              }
+              else {
+                return _noAddress();
+              }
             }
-            else {
-              return _noAddress();
-            }
-          }
-          else {
-            return _noAddress();
-          }
-        }
+        ),
+      ],
     );
   } 
 

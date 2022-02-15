@@ -133,7 +133,7 @@ class _AdminOrdersListPageState extends State<AdminOrdersListPage> {
                   )
               ),
               Container(
-                margin: EdgeInsets.only(top: 40, left: 20, right: 20),
+                margin: EdgeInsets.only(top: 45, left: 20, right: 20),
                 child: Column(
                   children: [
                     Container(
@@ -141,7 +141,7 @@ class _AdminOrdersListPageState extends State<AdminOrdersListPage> {
                       margin: EdgeInsets.symmetric(vertical: 5),
                       width: double.infinity,
                       child: Text(
-                        'Pedido: ${RelativeTime.getRelativeTime(order.timestamp ?? 0)}',
+                        'Fecha del pedido: ${RelativeTime.getRelativeTime(order.timestamp ?? 0)}',
                         style: TextStyle(
                             fontSize: 13
                         ),
@@ -164,7 +164,7 @@ class _AdminOrdersListPageState extends State<AdminOrdersListPage> {
                       width: double.infinity,
                       margin: EdgeInsets.symmetric(vertical: 5),
                       child: Text(
-                        'Entregar en: ${order.address?.address ?? ''}',
+                        'Dirección: ${order.address?.address ?? ''}',
                         style: TextStyle(
                             fontSize: 13
                         ),
@@ -210,13 +210,15 @@ Widget _menuDrawer() {
               Container(
                 height: 60,
                 margin: EdgeInsets.only(bottom: 10),
-                child: FadeInImage(
-                  image: _con.user?.image != null 
-                    ? NetworkImage(_con.user?.image)
-                    : AssetImage('assets/img/no-image.png'),
-                  fit: BoxFit.contain,
-                  fadeInDuration: Duration(milliseconds: 50),
-                  placeholder: AssetImage('assets/img/no-image.png'),
+                child: ClipOval(
+                  child: FadeInImage(
+                    image: _con.user?.image != null 
+                      ? NetworkImage(_con.user?.image)
+                      : AssetImage('assets/img/no-image.png'),
+                    fit: BoxFit.contain,
+                    fadeInDuration: Duration(milliseconds: 50),
+                    placeholder: AssetImage('assets/img/no-image.png'),
+                  ),
                 ),
               ),
 
@@ -253,12 +255,12 @@ Widget _menuDrawer() {
 
           ListTile(
             onTap: _con.goToCategoryCreate,
-            title: Text('Crear categoria'),
+            title: Text('Crear una nueva categoría'),
             trailing: Icon(Icons.list_alt),
           ),
           ListTile(
             onTap: _con.goToProductCreate,
-            title: Text('Crear producto'),
+            title: Text('Crear un nuevo producto'),
             trailing: Icon(Icons.fastfood),
           ),
           
@@ -266,8 +268,8 @@ Widget _menuDrawer() {
           _con.user.roles.length > 1 ?
           ListTile(
             onTap: _con.goToRoles,
-            title: Text('Roles'),
-            trailing: Icon(Icons.person),
+            title: Text('Seleccionar otro usuario para ingresar'),
+            trailing: Icon(Icons.supervised_user_circle_rounded),
           ) : Container() : Container(),
           
           ListTile(

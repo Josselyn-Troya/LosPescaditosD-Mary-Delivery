@@ -65,9 +65,9 @@ AdminOrdersDetailController _con = new AdminOrdersDetailController();
               _con.order.status != 'PEDIDO' ? _deliveryData() : Container(),
               _con.order.status == 'PEDIDO' ? _dropDown(_con.users) : Container(),
               _textData('Cliente:', '${_con.order.customer?.name ?? ''} ${_con.order.customer?.lastname ?? ''}'),
-              _textData('Entregar en:', '${_con.order.address?.address ?? ''}'),
+              _textData('Dirección:', '${_con.order.address?.address ?? ''}'),
               _textData(
-                  'Fecha de pedido:', 
+                  'Fecha del pedido:',
                   '${RelativeTime.getRelativeTime(_con.order.timestamp ?? 0)}'
               ),
               _con.order.status == 'PEDIDO' ? _buttonNext() : Container()
@@ -133,7 +133,7 @@ AdminOrdersDetailController _con = new AdminOrdersDetailController();
                   value: _con.idDelivery,
                   onChanged: (option) {
                     setState(() {
-                      print('Reparidor selecciondo $option');
+                      print('Reparidor seleccionado $option');
                       _con.idDelivery = option; 
                     });
                   },
@@ -154,13 +154,15 @@ AdminOrdersDetailController _con = new AdminOrdersDetailController();
           Container(
             height: 40,
             width: 40,
-            child: FadeInImage(
-              image: _con.order.delivery?.image != null
-                  ? NetworkImage(_con.order.delivery.image)
-                  : AssetImage('assets/img/no-image.png'),
-              fit: BoxFit.cover,
-              fadeInDuration: Duration(milliseconds: 50),
-              placeholder: AssetImage('assets/img/no-image.png'),
+            child: ClipOval(
+              child: FadeInImage(
+                image: _con.order.delivery?.image != null
+                    ? NetworkImage(_con.order.delivery.image)
+                    : AssetImage('assets/img/no-image.png'),
+                fit: BoxFit.cover,
+                fadeInDuration: Duration(milliseconds: 50),
+                placeholder: AssetImage('assets/img/no-image.png'),
+              ),
             ),
           ),
           SizedBox(width: 5),
@@ -179,13 +181,15 @@ AdminOrdersDetailController _con = new AdminOrdersDetailController();
             Container(
               height: 40,
               width: 40,
-              child: FadeInImage(
-                image: user.image != null
-                    ? NetworkImage(user.image)
-                    : AssetImage('assets/img/no-image.png'),
-                fit: BoxFit.cover,
-                fadeInDuration: Duration(milliseconds: 50),
-                placeholder: AssetImage('assets/img/no-image.png'),
+              child: ClipOval(
+                child: FadeInImage(
+                  image: user.image != null
+                      ? NetworkImage(user.image)
+                      : AssetImage('assets/img/no-image.png'),
+                  fit: BoxFit.cover,
+                  fadeInDuration: Duration(milliseconds: 50),
+                  placeholder: AssetImage('assets/img/no-image.png'),
+                ),
               ),
             ),
             SizedBox(width: 5),
@@ -255,21 +259,27 @@ AdminOrdersDetailController _con = new AdminOrdersDetailController();
           children: [
             _imageProduct(product),
             SizedBox(width: 10),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  product?.name ?? '',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold
-                  ),
-                ),
-                SizedBox(height: 10),
-                Text(
-                  'Cantidad: ${product.quantity}',
-                  style: TextStyle(
-                      fontSize: 13
-                  ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      product?.name ?? '',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold
+                      ),
+                    ),
+                    _textPrice(product),
+                    SizedBox(height: 10),
+                    Text(
+                      'Cantidad: ${product.quantity}',
+                      style: TextStyle(
+                          fontSize: 13
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -278,6 +288,19 @@ AdminOrdersDetailController _con = new AdminOrdersDetailController();
         ),
     );
   }
+
+Widget _textPrice(Product product) {
+  return Container(
+    margin: EdgeInsets.only(top: 10),
+    child: Text(
+      '${product.price* product.quantity}\$',
+      style: TextStyle(
+          color: Colors.grey,
+          fontWeight: FontWeight.bold
+      ),
+    ),
+  );
+}
   
 
   Widget _imageProduct(Product product) {

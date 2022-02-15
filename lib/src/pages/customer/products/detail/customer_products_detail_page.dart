@@ -81,30 +81,57 @@ class _CustomerProductsDetailPageState extends State<CustomerProductsDetailPage>
 
   Widget _addOrRemove(){
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 17),
+      margin: EdgeInsets.symmetric(horizontal: 20),
       child: Row(children: [
-        IconButton(
-          onPressed: _con.removeItem, 
-          icon: Icon(
-            Icons.remove_circle_outline_rounded,
-            color: Colors.grey,
-            size: 30,
-          )),
-           Text(
-            '${_con.counter}',
-            style: TextStyle(
-              fontSize: 17,
-              fontWeight: FontWeight.bold,
-              color: Colors.grey
-          )
+        GestureDetector(
+          onTap:
+            _con.removeItem,
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 7),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(8),
+                    bottomLeft: Radius.circular(8)
+                ),
+                color: Colors.grey[200]
+            ),
+            child: Text('-',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
         ),
-        IconButton(
-          onPressed: _con.addItem, 
-          icon: Icon(
-            Icons.add_circle_outline_rounded,
-            color: Colors.grey,
-            size: 30,
-          )
+        Container(
+          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 7),
+          color: Colors.grey[200],
+          child: Text('${_con.counter}',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),),
+        ),
+        GestureDetector(
+          onTap:
+            _con.addItem,
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 7),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(8),
+                    bottomRight: Radius.circular(8)
+                ),
+                color: Colors.grey[200]
+            ),
+            child: Text('+',
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+
+          ),
         ),
          
           Spacer(),

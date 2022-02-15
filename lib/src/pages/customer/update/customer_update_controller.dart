@@ -117,18 +117,11 @@ class CustomerUpdateController {
         child: Text('GALERIA')
     );
 
-    Widget cameraButton = ElevatedButton(
-        onPressed: () {
-          selectImage(ImageSource.camera);
-        },
-        child: Text('CAMARA')
-    );
 
     AlertDialog alertDialog = AlertDialog(
       title: Text('Selecciona tu imagen'),
       actions: [
-        galleryButton,
-        cameraButton
+        galleryButton
       ],
     );
 
